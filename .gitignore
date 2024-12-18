@@ -2,15 +2,9 @@ node_modules
 
 .env
 *.env
-public/JetBrainsMono-ExtraBold.ttf
-public/JetBrainsMono-ExtraBoldItalic.ttf
-public/JetBrainsMono-Thin.ttf
-public/JetBrainsMono-ThinItalic.ttf
-public/datastar.js
 *.min.css
 
 .npm
 .cache
-dist
 logs
 *.log
