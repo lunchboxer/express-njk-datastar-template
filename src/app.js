@@ -1,8 +1,8 @@
 import { join } from 'node:path'
-import express from 'express'
-import nunjucks from 'nunjucks'
-import livereload from 'livereload'
 import connectLivereload from 'connect-livereload'
+import express from 'express'
+import livereload from 'livereload'
+import nunjucks from 'nunjucks'
 
 const __dirname = import.meta.dirname
 

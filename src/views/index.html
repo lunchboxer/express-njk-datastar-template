@@ -11,8 +11,9 @@
 </div>
 
 <div class="repeater" data-computed-repeated="input.value.repeat(3)">
-    <input data-bind-input />
-    <div data-text="repeated.value">will be replaced</div>
+    <label for="repeater">Repeater (type anything)</label>
+    <input data-bind-input name="repeater" />
+    <p data-text="repeated.value">will be replaced</p>
 </div>
 
 {% endblock %}
