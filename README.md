@@ -10,6 +10,7 @@ It requires Node.js 18.x or later.
 - live reload
 - CSS mostly based on [milligram](https://milligram.io/)
 - biome for linting and formatting
+- [feather icons](https://feathericons.com/), so far just for theme switcher
 
 ## Quirks
 
