@@ -1,0 +1,38 @@
+{
+  "name": "newstack-template",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --env-file=.env src/app.js",
+    "dev": "node --env-file=.env --watch src/app.js",
+    "lint": "biome check",
+    "format": "biome check --fix",
+    "css-minify": "postcss src/app.css > public/dist/app.min.css",
+    "css-minify-watch": "onchange 'src/app.css' -- npm run css-minify"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "module",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2",
+    "nunjucks": "^3.2.4"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/connect-livereload": "^0.6.3",
+    "@types/express": "^5.0.0",
+    "@types/livereload": "^0.9.5",
+    "@types/nunjucks": "^3.2.6",
+    "connect-livereload": "^0.6.1",
+    "cssnano": "^7.0.6",
+    "livereload": "^0.9.3",
+    "onchange": "^7.1.0",
+    "postcss-cli": "^11.0.0"
+  }
+}

@@ -1,0 +1,30 @@
+<div class="theme-switcher"
+    data-signals="{ theme: window?.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'}">
+    <label data-show="theme.value === 'dark'">
+        <input type="radio" name="theme" value="light" data-bind-theme>
+        {% include "../icons/sun.svg" %}
+    </label>
+    <label data-show="theme.value === 'light'">
+        <input type="radio" name="theme" value="dark" data-bind-theme>
+        <div class="icon">{% include "../icons/moon.svg" %}</div>
+    </label>
+</div>
+
+<style>
+    input[type="radio"] {
+        display: none;
+    }
+
+    .theme-switcher {
+        display: flex;
+        justify-content: center;
+    }
+
+    .theme-switcher label {
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
+        height: 1.2rem;
+        width: 1.2rem;
+    }
+</style>

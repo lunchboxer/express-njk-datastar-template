@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Welcome to Newstack DataStar Test</h1>
+<p>This template is very simple.</p>
+
+<div class="counter" data-signals="{count: 0}">
+    <p>Counter: <span data-text="count.value"></span></p>
+    <button data-on-click="count.value += 1">Increment</button>
+</div>
+
+<div class="repeater" data-computed-repeated="input.value.repeat(3)">
+    <input data-bind-input />
+    <div data-text="repeated.value">will be replaced</div>
+</div>
+
+{% endblock %}
