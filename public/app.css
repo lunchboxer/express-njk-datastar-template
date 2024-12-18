@@ -89,11 +89,11 @@
 }
 
 body:has(.theme-switcher input[value="light"]:checked) {
-  --available-color-schemes: light; /* Forces light color-scheme */
+  --available-color-schemes: light;
 }
 
 body:has(.theme-switcher input[value="dark"]:checked) {
-  --available-color-schemes: dark; /* Forces dark color-scheme */
+  --available-color-schemes: dark;
 }
 
 @media (min-width: 576px) {
@@ -138,6 +138,7 @@ video {
 body {
   color-scheme: var(--available-color-schemes);
   min-height: 100svh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   margin: 0;
@@ -189,7 +190,7 @@ pre {
   font-size: 1rem;
 }
 
-pre > code {
+pre>code {
   border-radius: 0;
   white-space: pre;
   display: block;
@@ -213,7 +214,6 @@ input[type="reset"],
 input[type="button"],
 input[type="submit"] {
   padding: 0.8rem 2rem;
-  font-size: 0.8rem;
   font-family: var(--font-family);
   border: 1px solid var(--primary-color);
   border-radius: 0.5rem;
@@ -302,18 +302,18 @@ select {
   -webkit-appearance: none;
   appearance: none;
   padding: 0.5rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-family: var(--font-family);
   border: none;
   border-bottom: 1px solid var(--color);
   margin: 0.5rem 0;
   background-color: var(--contrast-bg-color);
   box-shadow: none;
-  height: 2.5rem;
+  height: 2.8rem;
   color: var(--color);
   color-scheme: var(--available-color-schemes);
-  min-width: 30ch;
   width: 100%;
+  max-width: 40ch;
 }
 
 fieldset.invalid label {
@@ -340,8 +340,7 @@ textarea {
 
 select {
   /* background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 0 29 14" width="29"><path fill="%23d1d1d1" d="M9.37727 3.625l5.08154 6.93523L19.54036 3.625"/></svg>') center right no-repeat; */
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 8" width="30"><path fill="%23d1d1d1" d="M0,0l6,8l6-8"/></svg>')
-    center right no-repeat;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 8" width="30"><path fill="%23d1d1d1" d="M0,0l6,8l6-8"/></svg>') center right no-repeat;
   background-color: var(--contrast-bg-color);
   padding-right: 3rem;
   cursor: pointer;
