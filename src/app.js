@@ -10,8 +10,6 @@ const dev = process.env.NODE_ENV !== 'production'
 
 const appCssPath = join(__dirname, '../public/app.css')
 
-console.error(appCssPath)
-
 if (dev) {
   const liveReloadServer = livereload.createServer()
   liveReloadServer.watch([__dirname, appCssPath])

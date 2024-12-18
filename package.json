@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node --env-file=.env src/app.js",
-    "dev": "node --env-file=.env --watch src/app.js",
+    "dev": "node --env-file=.env --watch-path=src/ src/app.js",
     "lint": "biome check",
     "format": "biome check --fix",
     "css-minify": "postcss src/app.css > public/dist/app.min.css",

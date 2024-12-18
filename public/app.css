@@ -2,7 +2,7 @@
   font-family: "JetBrains Mono";
   /* local('JetBrainsMono-Thin'), */
   /* local('JetBrains Mono Thin'), */
-  src: url("dist/JetBrainsMono-Thin.ttf") format("truetype");
+  src: url("/static/dist/JetBrainsMono-Thin.ttf") format("truetype");
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -12,7 +12,7 @@
   font-family: "JetBrains Mono";
   /* local('JetBrainsMono Extra-bold'), */
   /* local('JetBrains Mono Extra-bold'), */
-  src: url("dist/JetBrainsMono-ExtraBold.ttf") format("truetype");
+  src: url("/static/dist/JetBrainsMono-ExtraBold.ttf") format("truetype");
   font-weight: 800;
   font-style: normal;
   font-display: swap;
