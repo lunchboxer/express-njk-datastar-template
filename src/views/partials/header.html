@@ -1,3 +1,52 @@
 <header>
-    <h1 class="title">Template Title</h1>
+  <div class="left">
+    <div class="logo">
+      {% include "icons/briefcase.svg" %}
+    </div>
+    <h1 class="title">App Name</h1>
+  </div>
+  <div class="right">
+    <span class="menu">{% include "icons/menu.svg" %}</span>
+  </div>
 </header>
+
+<style>
+  header {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--contrast-bg-color);
+    padding: 1rem;
+    box-shadow: 0 0 0.2rem 0.1rem var(--contrastier-bg-color);
+
+  }
+
+  header .left,
+  header .right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  header h1 {
+    color: var(--primary-color);
+    margin: 0;
+    padding: 0;
+    font-size: 1.3rem;
+  }
+
+  header .logo {
+    color: var(--primary-color);
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  header h1.title {
+    font-weight: 800;
+  }
+
+  @media (min-width: 576px) {
+    header {
+      padding: 1rem 2rem;
+    }
+  }
+</style>

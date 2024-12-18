@@ -15,5 +15,3 @@ It requires Node.js 18.x or later.
 ## Quirks
 
 - tooling for datastar is not great. The javascript is in a string so the normal javascript lsp ignores it.
-
-- live reload does not reload the css when app.css is changed.
