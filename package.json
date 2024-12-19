@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --env-file=.env src/app.js",
+    "start": "NODE_ENV=production node src/app.js",
     "dev": "node --env-file=.env --watch-path=src/ src/app.js",
     "lint": "biome check",
     "format": "biome check --fix",
@@ -20,6 +20,7 @@
   },
   "description": "",
   "dependencies": {
+    "@libsql/client": "^0.14.0",
     "express": "^4.21.2",
     "nunjucks": "^3.2.4"
   },

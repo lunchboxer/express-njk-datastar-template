@@ -3,6 +3,7 @@ import connectLivereload from 'connect-livereload'
 import express from 'express'
 import livereload from 'livereload'
 import nunjucks from 'nunjucks'
+import { userRouter } from './routes/user.js'
 
 const __dirname = import.meta.dirname
 
@@ -41,6 +42,7 @@ app.set('view engine', 'html')
 app.get('/', (_, res) => {
   res.render('index.html', { title: 'Home Page' })
 })
+app.use('/users', userRouter)
 app.use((req, res) => {
   res.status(404)
   if (req.accepts('html')) {
