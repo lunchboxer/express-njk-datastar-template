@@ -15,3 +15,13 @@ It requires Node.js 18.x or later.
 ## Quirks
 
 - tooling for datastar is not great. The javascript is in a string so the normal javascript lsp ignores it.
+
+## Getting started
+
+You'll need to have [atlas](https://atlasgo.io) installed for the database migrations. `curl -sSf https://atlasgo.sh | sh` should do the trick. With atlas installed run `./database/migrate-local.sh` to create the local sqlite database and set it up according to `./database/schema.sql`.
+
+Install dependencies with `npm install`.
+
+Run the server with `npm run dev`.
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
