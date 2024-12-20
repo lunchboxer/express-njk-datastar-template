@@ -28,6 +28,9 @@ if (dev) {
   app.use(connectLivereload({ port: 35729 }))
 }
 
+// app.use(express.json())
+// app.use(express.urlencoded({ extended: true }))
+
 nunjucks.configure(join(__dirname, 'views'), {
   autoescape: true,
   express: app,

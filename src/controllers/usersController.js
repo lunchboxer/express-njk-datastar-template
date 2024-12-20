@@ -1,7 +1,6 @@
 import { getUsers } from '../models/userModel.js'
-import { asyncHandler } from '../errorHandler.js'
 
-export const allUsers = asyncHandler(async (_req, res, _next) => {
-  const users = await getUsers() // Call the model function
+export const allUsers = async (_req, res, _next) => {
+  const users = await getUsers()
   res.render('users', { users })
-})
+}
