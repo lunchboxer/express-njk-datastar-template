@@ -316,6 +316,10 @@ select {
   max-width: 40ch;
 }
 
+form {
+  max-width: 40ch;
+}
+
 fieldset.invalid label {
   color: var(--error-color);
 }

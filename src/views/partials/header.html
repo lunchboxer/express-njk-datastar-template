@@ -9,8 +9,33 @@
     </div>
     <div class="right">
         <span class="menu">{% include "icons/menu.svg" %}</span>
+        <nav>
+            {% if user %}
+                <a href="#" data-on-click="handleLogout">Logout</a>
+            {% else %}
+                <a href="/auth/login">Login</a>
+                <a href="/auth/register">Register</a>
+            {% endif %}
+        </nav>
     </div>
 </header>
+
+<script type="module">
+    async function handleLogout(event) {
+        event.preventDefault()
+        try {
+            const response = await fetch('/auth/logout', { method: 'POST' })
+            if (response.ok) {
+                window.location.href = '/'
+            }
+        } catch (error) {
+            console.error('Logout failed', error)
+        }
+    }
+
+    // Expose handleLogout to global scope for data-on-click
+    window.handleLogout = handleLogout
+</script>
 
 <style>
     a.title-link {
@@ -55,6 +80,15 @@
 
     header h1.title {
         font-weight: 800;
+    }
+
+    header nav {
+        display: flex;
+        gap: 1rem;
+    }
+    header nav a {
+        text-decoration: none;
+        color: var(--primary-color);
     }
 
     @media (min-width: 576px) {
