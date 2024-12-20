@@ -1,7 +1,6 @@
 export const errorHandler = (err, req, res, _next) => {
   console.error(err.stack)
 
-  // Set the status code
   res.status(err.status || 500)
 
   if (req.accepts('html')) {
@@ -19,4 +18,8 @@ export const errorHandler = (err, req, res, _next) => {
   } else {
     res.type('text').send(`Error: ${err.message}`)
   }
+}
+
+export const asyncHandler = fn => (req, res, next) => {
+  Promise.resolve(fn(req, res, next)).catch(next)
 }

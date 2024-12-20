@@ -43,9 +43,6 @@ app.get('/', (_, res) => {
 })
 app.use('/users', userRouter)
 
-app.get('/error', (_, _res) => {
-  throw new Error('This is an error')
-})
 app.use(errorHandler)
 
 app.use((req, res) => {
@@ -62,8 +59,7 @@ app.use((req, res) => {
   res.type('txt').send('Not found')
 })
 
-// Start the server
 const PORT = 3000
 app.listen(PORT, () => {
-  console.info(`Server is running on http://localhost:${PORT}`)
+  console.info(`Server running on http://localhost:${PORT}`)
 })
