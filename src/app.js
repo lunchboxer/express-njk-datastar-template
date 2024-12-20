@@ -3,6 +3,7 @@ import connectLivereload from 'connect-livereload'
 import express from 'express'
 import livereload from 'livereload'
 import nunjucks from 'nunjucks'
+import { errorHandler } from './errorHandler.js'
 import { userRouter } from './routes/user.js'
 
 const __dirname = import.meta.dirname
@@ -27,7 +28,6 @@ if (dev) {
   app.use(connectLivereload({ port: 35729 }))
 }
 
-// Configure Nunjucks
 nunjucks.configure(join(__dirname, 'views'), {
   autoescape: true,
   express: app,
@@ -38,25 +38,27 @@ app.use('/static', express.static(join(__dirname, '../public')))
 
 app.set('view engine', 'html')
 
-// Define a route
 app.get('/', (_, res) => {
   res.render('index.html', { title: 'Home Page' })
 })
 app.use('/users', userRouter)
+
+app.get('/error', (_, _res) => {
+  throw new Error('This is an error')
+})
+app.use(errorHandler)
+
 app.use((req, res) => {
   res.status(404)
   if (req.accepts('html')) {
-    res.render('error.html', { url: req.url })
+    res.render('404.html', { url: req.url })
     return
   }
 
-  // respond with json
   if (req.accepts('json')) {
     res.json({ error: 'Not found' })
     return
   }
-
-  // default to plain-text. send()
   res.type('txt').send('Not found')
 })
 

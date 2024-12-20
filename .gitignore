@@ -9,3 +9,4 @@ node_modules
 logs
 *.log
 database/local.db
+notes.md
