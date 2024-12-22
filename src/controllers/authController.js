@@ -1,5 +1,10 @@
 import { handleLogin, handleRegister } from '../models/authModel.js'
 
+export const profile = (req, res, _next) => {
+  const user = req.user
+  res.render('profile', { user })
+}
+
 export const register = async (req, res, _next) => {
   try {
     const result = await handleRegister(req.body)

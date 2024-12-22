@@ -1,0 +1,134 @@
+<nav role="navigation">
+    <div id="menuToggle">
+        <!--
+    A fake / hidden checkbox is used as click reciever,
+    so you can use the :checked selector on it.
+    -->
+        <input type="checkbox" id="menuCheckbox" />
+
+        {% include "icons/user.svg" %}
+        <!--
+    Too bad the menu has to be inside of the button
+    but hey, it's pure CSS magic.
+    -->
+        <ul id="menu">
+            <!--
+      We can use a label here to close upon click (when doing same page navigation), this
+      does require a slight bit of JS.
+      -->
+            <li>
+                {% if user.username %}
+                <em>Logged in as {{ user.username }}</em>
+                {% else %}
+                <em>Not logged in</em>
+                {% endif %}
+            </li>
+            {% if user.id %}
+            <a href="/auth/me">
+                <li>
+                    <label for="menuCheckbox" onclick="this.parentNode.click();">Profile</label>
+                </li>
+            </a>
+
+            <!-- These just close the menu -->
+            <li><label for="menuCheckbox">
+                    <form class="inline-form" action="/auth/logout" method="post">
+                        <button class="ghost-button">Logout</button>
+                    </form>
+                </label>
+            </li>
+            {% else %}
+            <li><label for="menuCheckbox"><a href="/auth/login">Log in</a></label></li>
+            <li><label for="menuCheckbox"><a href="/auth/register">Register</a></label></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<style>
+    #menuToggle {
+        display: block;
+        position: relative;
+        z-index: 10;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    #menuToggle a {
+        text-decoration: none;
+        color: var(--color);
+
+        transition: color 0.3s ease;
+    }
+
+    #menuToggle a:hover {
+        color: var(--primary-color);
+    }
+
+
+    #menuToggle input {
+        display: block;
+        width: 2rem;
+        height: 2rem;
+        position: fixed;
+        top: 0.5rem;
+        right: 0.5rem;
+        cursor: pointer;
+        opacity: 0;
+        z-index: 3;
+        -webkit-touch-callout: none;
+    }
+
+
+    #menuToggle span:first-child {
+        transform-origin: 0% 0%;
+    }
+
+    #menuToggle span:nth-last-child(2) {
+        transform-origin: 0% 100%;
+    }
+
+    #menu {
+        position: absolute;
+        /* max-width: 40rem; */
+        top: 2.5rem;
+        right: -2rem;
+        height: 100vh;
+        width: max-content;
+        padding: 0.5rem 0;
+        box-sizing: border-box;
+        overflow-y: auto;
+        background: var(--contrastier-bg-color);
+        list-style-type: none;
+        -webkit-font-smoothing: antialiased;
+        transform-origin: 0% 0%;
+        z-index: -1;
+        transform: translate(100%, 0);
+        transition: transform 0.3s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+        margin: 0;
+    }
+
+    #menu li {
+        color: var(--color);
+        margin: 0;
+        padding: 1rem 4rem 1rem 2rem;
+    }
+
+
+    #menu li label {
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    #menu li:has(label):hover {
+        background-color: var(--contrast-bg-color);
+    }
+
+    /*
+ * And let's slide it in from the left
+ */
+    #menuToggle input:checked~ul {
+        transform: none;
+    }
+</style>
