@@ -4,9 +4,10 @@ import cookieParser from 'cookie-parser'
 import express from 'express'
 import livereload from 'livereload'
 import nunjucks from 'nunjucks'
-import { errorHandler } from './errorHandler.js'
+import { errorHandler404, errorHandler500 } from './errorHandler.js'
 import { authMiddleware } from './middleware/auth.js'
 import { authRouter } from './routes/auth.js'
+import { rootRouter } from './routes/root.js'
 import { userRouter } from './routes/user.js'
 
 const __dirname = import.meta.dirname
@@ -47,53 +48,12 @@ app.use('/static', express.static(join(__dirname, '../public')))
 
 app.set('view engine', 'html')
 
-app.get('/', (req, res) => {
-  res.render('index.html', {
-    title: 'Home Page',
-    user: req.user,
-  })
-})
-
-// Authentication view routes
-app.get('/auth/login', (req, res) => {
-  if (req.user) {
-    return res.redirect('/')
-  }
-  res.render('login.html', {
-    title: 'Login',
-    user: req.user,
-  })
-})
-
-app.get('/auth/register', (req, res) => {
-  if (req.user) {
-    return res.redirect('/')
-  }
-  res.render('register.html', {
-    title: 'Register',
-    user: req.user,
-  })
-})
-
-// Add routes
 app.use('/users', userRouter)
 app.use('/auth', authRouter)
+app.use('/', rootRouter)
 
-app.use(errorHandler)
-
-app.use((req, res) => {
-  res.status(404)
-  if (req.accepts('html')) {
-    res.render('404.html', { url: req.url })
-    return
-  }
-
-  if (req.accepts('json')) {
-    res.json({ error: 'Not found' })
-    return
-  }
-  res.type('txt').send('Not found')
-})
+app.use(errorHandler500)
+app.use(errorHandler404)
 
 const PORT = 3000
 

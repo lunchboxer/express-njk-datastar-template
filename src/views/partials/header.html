@@ -8,34 +8,19 @@
         </a>
     </div>
     <div class="right">
-        <span class="menu">{% include "icons/menu.svg" %}</span>
         <nav>
             {% if user %}
-                <a href="#" data-on-click="handleLogout">Logout</a>
+            <form class="inline-form" action="/auth/logout" method="POST">
+                <button class="link-button" type="submit">Logout</button>
+            </form>
             {% else %}
-                <a href="/auth/login">Login</a>
-                <a href="/auth/register">Register</a>
+            <a href="/auth/login">Login</a>
+            <a href="/auth/register">Register</a>
             {% endif %}
         </nav>
+        <span class="menu">{% include "icons/menu.svg" %}</span>
     </div>
 </header>
-
-<script type="module">
-    async function handleLogout(event) {
-        event.preventDefault()
-        try {
-            const response = await fetch('/auth/logout', { method: 'POST' })
-            if (response.ok) {
-                window.location.href = '/'
-            }
-        } catch (error) {
-            console.error('Logout failed', error)
-        }
-    }
-
-    // Expose handleLogout to global scope for data-on-click
-    window.handleLogout = handleLogout
-</script>
 
 <style>
     a.title-link {
@@ -86,6 +71,7 @@
         display: flex;
         gap: 1rem;
     }
+
     header nav a {
         text-decoration: none;
         color: var(--primary-color);
