@@ -1,17 +1,24 @@
 @font-face {
   font-family: "JetBrains Mono";
-  /* local('JetBrainsMono-Thin'), */
-  /* local('JetBrains Mono Thin'), */
-  src: url("/static/dist/JetBrainsMono-Thin.ttf") format("truetype");
-  font-weight: 100;
+  local('JetBrains Mono'),
+  src: url("/static/dist/JetBrainsMono-Regular.ttf") format("truetype");
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: "JetBrains Mono";
-  /* local('JetBrainsMono Extra-bold'), */
-  /* local('JetBrains Mono Extra-bold'), */
+  local('JetBrains Mono'),
+  src: url("/static/dist/JetBrainsMono-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  local('JetBrains Mono ExtraBold'),
   src: url("/static/dist/JetBrainsMono-ExtraBold.ttf") format("truetype");
   font-weight: 800;
   font-style: normal;
@@ -21,6 +28,8 @@
 :root {
   --font-family: "JetBrains Mono", Roboto, Helvetica, Arial, sans-serif;
   --font-size: 16px;
+  --font-weight: 400;
+  --font-weight-bold: 800;
   --available-color-schemes: light dark;
 
   /* catppuccin colors */
@@ -147,7 +156,7 @@ body {
   background-color: var(--background-color);
   color: var(--color);
   font-family: var(--font-family);
-  font-weight: 100;
+  font-weight: var(--font-weight);
   font-size: var(--font-size);
   transition: background-color 0.3s, color 0.3s;
 }
@@ -220,11 +229,12 @@ input[type="submit"] {
   background-color: var(--background-color);
   color: var(--primary-color);
   cursor: pointer;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   display: inline-block;
   text-align: center;
   text-decoration: none;
   margin: 1rem 0;
+  font-size: 1rem;
 }
 
 input[type="submit"] {
@@ -348,7 +358,8 @@ select {
   background-color: var(--contrast-bg-color);
   padding-right: 3rem;
   cursor: pointer;
-  min-width: 30ch;
+  width: 100%;
+  max-width: 40ch;
 }
 
 option {
@@ -390,7 +401,7 @@ label,
 legend {
   display: block;
   font-size: 1rem;
-  margin: 1rem 0 0;
+  margin: 2rem 0 0.5rem;
 }
 
 fieldset {
@@ -418,7 +429,7 @@ h6 {
   text-wrap: balance;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   line-height: 1.3;
 }
 
@@ -440,6 +451,25 @@ h4 {
 
 a {
   color: var(--primary-color);
+}
+
+button.link-button {
+    background: none;
+    font-weight: var(--font-weight);
+    color: var(--primary-color);
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+button.link-button:hover {
+    color: var(--color);
+    background: none;
+}
+
+form.inline-form {
+    display: inline;
+    padding: 0;
+    margin: 0;
 }
 
 a:focus,
@@ -469,7 +499,11 @@ ul {
 
 b,
 strong {
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
+}
+
+em {
+    font-style: italic;
 }
 
 small {
@@ -522,7 +556,7 @@ p.error {
   }
 
   main {
-    padding: 2rem;
+    padding: 1rem 2rem;
   }
 }
 
