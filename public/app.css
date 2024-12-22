@@ -327,20 +327,10 @@ select {
 }
 
 form {
+  width: 100%;
   max-width: 40ch;
 }
 
-fieldset.invalid label {
-  color: var(--error-color);
-}
-
-fieldset.invalid input {
-  border-color: var(--error-color);
-}
-
-fieldset.invalid input:focus {
-  border-color: var(--error-color);
-}
 
 .inline {
   display: inline;
@@ -547,6 +537,29 @@ p.error {
   gap: 0.5rem;
   padding: 0.5rem 0;
   justify-content: flex-end;
+}
+
+div.centered {
+    width: 100%;
+    display: flex;
+    min-height: calc(100vh - 10rem);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+label.invalid
+  color: var(--error-color);
+}
+
+input:invalid,
+input.invalid {
+  border-color: var(--error-color);
+}
+
+input:invalid:focus,
+input.invalid:focus {
+  border-color: var(--error-color);
 }
 
 @media (min-width: 576px) {

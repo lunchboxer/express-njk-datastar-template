@@ -1,30 +1,56 @@
 {% extends "base.html" %}
 
+{% from "partials/input.html" import input %}
+
 {% block content %}
-<div class="register-container">
-    <h2>Register</h2>
-    <form id="register-form" data-signals="{ error: '' }" method="post">
-        <fieldset>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required data-bind-username>
+<div class="centered">
+    <form id="register-form" method="post">
+        <h2>Register</h2>
+        {{ input(
+        name="username",
+        label="Username",
+        type="text",
+        value=username,
+        required=true,
+        errors=errors
+        ) }}
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required data-bind-email>
+        {{ input(
+        name="email",
+        label="Email",
+        type="email",
+        value=email,
+        required=true,
+        errors=errors
+        ) }}
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required data-bind-password>
+        {{ input(
+        name="password",
+        label="Password",
+        type="password",
+        value=password,
+        required=true,
+        errors=errors
+        ) }}
 
-            <label for="name">Name (Optional)</label>
-            <input type="text" id="name" name="name" data-bind-name>
+        {{ input(
+        name="name",
+        label="Name (Optional)",
+        type="text",
+        value=name,
+        errors=errors
+        ) }}
 
-            <p class="error" data-show="error.value" data-text="error.value"></p>
+        {% if error.all %}
+        <p class="error">{{error.all}}</p>
+        {% endif %}
 
-            <div class="button-group">
-                <button class="form-submit" type="submit">
-                    Register
-                </button>
-            </div>
-        </fieldset>
+
+        <div class="button-group">
+            <button class="form-submit" type="submit">
+                Register
+            </button>
+        </div>
     </form>
 </div>
 

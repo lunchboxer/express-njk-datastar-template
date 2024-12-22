@@ -1,25 +1,37 @@
 {% extends "base.html" %}
 
+{% from "partials/input.html" import input %}
+
 {% block content %}
-<div class="login-container">
-    <h2>Login</h2>
-    <form id="login-form" data-signals="{ error: '' }" method="post">
-        <fieldset>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
+<div class="centered">
+    <form id="login-form" method="post">
+        <h2>Login</h2>
+        {{ input(
+        name="username",
+        label="Username",
+        type="text",
+        value=username,
+        required=true,
+        errors=errors
+        ) }}
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+        {{ input(
+        name="password",
+        label="Password",
+        type="password",
+        value=password,
+        required=true,
+        errors=errors
+        ) }}
 
-            <p class="error" data-show="error.value" data-text="error.value"></p>
-            <p data-text="fetching.value ? 'Fetching...' : ''"></p>
-            <div class="button-group">
-                <button data-class-loading="fetching.value" data-attributes-disabled="fetching.value" type="submit"
-                    data-on-click="sse('/auth/login)">
-                    Login
-                </button>
-            </div>
-        </fieldset>
+        {% if error %}
+        <p class="error">{{error}}</p>
+        {% endif %}
+        <div class="button-group">
+            <button type="submit">
+                Login
+            </button>
+        </div>
     </form>
 </div>
 

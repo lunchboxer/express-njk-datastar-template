@@ -1,0 +1,13 @@
+{% macro input(name, label, type='text', value='', errors={}, placeholder='', required=false) %}
+{% set hasError = errors[name] %}
+<div class="input-group">
+    <label for="{{ name }}" class="label {% if hasError %}invalid{% endif %}">
+        {{ label }}
+    </label>
+    <input type="{{ type }}" name="{{ name }}" id="{{ name }}" value="{{ value }}" placeholder="{{ placeholder }}"
+        class="{% if hasError %}invalid{% endif %}" {% if required %}required{% endif %}>
+    {% if hasError %}
+    <p class="error">{{ errors[name] }}</p>
+    {% endif %}
+</div>
+{% endmacro %}
