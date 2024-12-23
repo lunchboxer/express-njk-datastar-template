@@ -1,0 +1,145 @@
+<nav role="navigation">
+    <div id="navMenuToggle">
+        <input type="checkbox" id="navMenuCheckbox" />
+
+        <span class="trigger">
+            {% include "icons/menu.svg" %}
+        </span>
+        <ul id="navMenu">
+            <li class="close">
+                {% include "icons/x.svg" %}
+            </li>
+            <li class="app-info">
+                {% include "partials/logo-and-title.html" %}
+            </li>
+            <hr />
+            <li><label for="navMenuCheckbox"><a href="/Users">Users</a></label></li>
+        </ul>
+    </div>
+</nav>
+
+<style>
+    #navMenu hr {
+        margin: 1rem;
+        border-color: var(--contrast-bg-color);
+    }
+
+    #navMenuToggle {
+        display: block;
+        position: relative;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    #navMenuToggle a {
+        text-decoration: none;
+        color: var(--color);
+
+        transition: color 0.3s ease;
+    }
+
+    #navMenuToggle a:hover {
+        color: var(--primary-color);
+    }
+
+
+    #navMenuToggle input {
+        display: block;
+        width: 2rem;
+        height: 2rem;
+        position: fixed;
+        top: 0.5rem;
+        left: 0.5rem;
+        cursor: pointer;
+        opacity: 0;
+        z-index: 2;
+        -webkit-touch-callout: none;
+    }
+
+
+    #navMenuToggle span:first-child {
+        transform-origin: 0% 0%;
+    }
+
+    #navMenuToggle span:nth-last-child(2) {
+        transform-origin: 0% 100%;
+    }
+
+    #navMenu {
+        position: absolute;
+        top: -1rem;
+        left: -2rem;
+        width: 15rem;
+        height: 100svh;
+        padding: 0;
+        box-sizing: border-box;
+        overflow-y: auto;
+        background: var(--contrastier-bg-color);
+        list-style-type: none;
+        -webkit-font-smoothing: antialiased;
+        transform-origin: 0% 0%;
+        transform: translate(-100%, 0);
+        transition: transform 0.3s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+        margin: 0;
+    }
+
+    #navMenu li {
+        color: var(--color);
+        margin: 0;
+        padding: 1rem 2rem;
+    }
+
+
+    #navMenu li label {
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    #navMenu li:has(label):hover {
+        background-color: var(--contrast-bg-color);
+    }
+
+    #navMenuToggle input:checked~ul {
+        transform: none;
+    }
+
+    #navMenuToggle .app-info {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        margin: 1rem;
+    }
+
+    #navMenuToggle input:checked+.trigger {
+        visibility: hidden;
+    }
+
+    #navMenu .close {
+        display: flex;
+        width: 100%;
+    }
+
+    @media (min-width: 992px) {
+
+        #navMenu .app-info {
+            display: flex;
+            margin: 2rem 0;
+        }
+
+        #navMenuToggle input,
+        #navMenuToggle .trigger,
+        #navMenu .close {
+            display: none;
+        }
+
+        #navMenu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: none;
+            overflow-y: auto;
+        }
+
+    }
+</style>

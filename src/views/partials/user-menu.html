@@ -1,22 +1,15 @@
 <nav role="navigation">
     <div id="menuToggle">
-        <!--
-    A fake / hidden checkbox is used as click reciever,
-    so you can use the :checked selector on it.
-    -->
         <input type="checkbox" id="menuCheckbox" />
 
-        {% include "icons/user.svg" %}
-        <!--
-    Too bad the menu has to be inside of the button
-    but hey, it's pure CSS magic.
-    -->
+        <span class="trigger">
+            {% include "icons/user.svg" %}
+        </span>
         <ul id="menu">
-            <!--
-      We can use a label here to close upon click (when doing same page navigation), this
-      does require a slight bit of JS.
-      -->
-            <li>
+            <li class="close">
+                {% include "icons/x.svg" %}
+            </li>
+            <li class="user-info">
                 {% if user.username %}
                 <em>Logged in as {{ user.username }}</em>
                 {% else %}
@@ -24,14 +17,15 @@
                 {% endif %}
             </li>
             {% if user.id %}
+            <hr />
             <a href="/auth/me">
                 <li>
                     <label for="menuCheckbox" onclick="this.parentNode.click();">Profile</label>
                 </li>
             </a>
 
-            <!-- These just close the menu -->
-            <li><label for="menuCheckbox">
+            <li>
+                <label for="menuCheckbox">
                     <form class="inline-form" action="/auth/logout" method="post">
                         <button class="ghost-button">Logout</button>
                     </form>
@@ -46,10 +40,14 @@
 </nav>
 
 <style>
+    #menu hr {
+        margin: 1rem;
+        border-color: var(--contrast-bg-color);
+    }
+
     #menuToggle {
         display: block;
         position: relative;
-        z-index: 10;
         -webkit-user-select: none;
         user-select: none;
     }
@@ -75,7 +73,7 @@
         right: 0.5rem;
         cursor: pointer;
         opacity: 0;
-        z-index: 3;
+        z-index: 2;
         -webkit-touch-callout: none;
     }
 
@@ -90,28 +88,28 @@
 
     #menu {
         position: absolute;
-        /* max-width: 40rem; */
-        top: 2.5rem;
+        top: -1rem;
         right: -2rem;
-        height: 100vh;
+        /* height: 100vh; */
         width: max-content;
-        padding: 0.5rem 0;
+        padding: 0;
         box-sizing: border-box;
         overflow-y: auto;
         background: var(--contrastier-bg-color);
         list-style-type: none;
         -webkit-font-smoothing: antialiased;
         transform-origin: 0% 0%;
-        z-index: -1;
+        /*z-index: -1; */
         transform: translate(100%, 0);
         transition: transform 0.3s cubic-bezier(0.77, 0.2, 0.05, 1.0);
         margin: 0;
+        padding-bottom: 2rem;
     }
 
     #menu li {
         color: var(--color);
         margin: 0;
-        padding: 1rem 4rem 1rem 2rem;
+        padding: 1rem 2rem;
     }
 
 
@@ -125,10 +123,24 @@
         background-color: var(--contrast-bg-color);
     }
 
-    /*
- * And let's slide it in from the left
- */
+    .user-info {
+        display: flex;
+        justify-content: space-between;
+        height: 3.5rem;
+        gap: 2rem;
+    }
+
     #menuToggle input:checked~ul {
         transform: none;
+    }
+
+    #menuToggle input:checked+.trigger {
+        visibility: hidden;
+    }
+
+    #menu .close {
+        display: flex;
+        flex-direction: row-reverse;
+        width: 100%;
     }
 </style>

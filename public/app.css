@@ -97,6 +97,12 @@
   --success-color: light-dark(var(--latte-green), var(--mocha-green));
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --available-color-schemes: dark;
+  }
+}
+
 body:has(.theme-switcher input[value="light"]:checked) {
   --available-color-schemes: light;
 }
@@ -576,8 +582,13 @@ input.invalid:focus {
   }
 }
 
-/* @media (min-width: 768px) {} */
+@media (min-width: 768px) {
+}
 
-/* @media (min-width: 992px) {} */
+@media (min-width: 992px) {
+    body {
+        padding-left: 15rem;
+      }
+}
 
 /* @media (min-width: 1200px) {} */

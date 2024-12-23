@@ -1,17 +1,37 @@
-<div class="theme-switcher"
-    data-signals="{ theme: window?.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'}">
-    <label data-show="theme.value === 'dark'">
-        <input type="radio" name="theme" value="light" data-bind-theme>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme');
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const theme = savedTheme || systemTheme;
+
+        document.querySelector(`.theme-switcher input[value="${theme}"]`).checked = true;
+        localStorage.setItem('theme', theme);
+    });
+</script>
+
+<div class="theme-switcher">
+    <label id="theme-switcher-light" onclick="localStorage.setItem('theme', 'light')">
+        <input type="radio" name="theme" value="light">
         {% include "../icons/sun.svg" %}
     </label>
-    <label data-show="theme.value === 'light'">
-        <input type="radio" name="theme" value="dark" data-bind-theme>
+    <label id="theme-switcher-dark" onclick="localStorage.setItem('theme', 'dark')">
+        <input type="radio" name="theme" value="dark">
         <div class="icon">{% include "../icons/moon.svg" %}</div>
     </label>
 </div>
 
 <style>
-    input[type="radio"] {
+    .theme-switcher input[type="radio"] {
+        display: none;
+    }
+
+    /* Hide light theme toggle when in light mode */
+    body:has(.theme-switcher input[value="light"]:checked) #theme-switcher-light {
+        display: none;
+    }
+
+    /* Hide dark theme toggle when in dark mode */
+    body:has(.theme-switcher input[value="dark"]:checked) #theme-switcher-dark {
         display: none;
     }
 
@@ -28,3 +48,11 @@
         width: 1.2rem;
     }
 </style>
+
+<noscript>
+    <style>
+        .theme-switcher {
+            display: none;
+        }
+    </style>
+</noscript>

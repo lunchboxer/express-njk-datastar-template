@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import {
   apiLogin,
-  apiRegister,
   apiLogout,
+  apiRegister,
 } from '../controllers/authController.js'
 
 const apiRouter = Router()
