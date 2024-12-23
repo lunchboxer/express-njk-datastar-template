@@ -6,6 +6,8 @@
 {% if user %}
 <p>Username: {{ user.username }}</p>
 <p>Email: {{ user.email }}</p>
+<p>Name: {{ user.name or '-' }}</p>
+<p>Roles: {{ user.roles or '-' }}</p>
 {% else %}
 <p>You are not logged in.</p>
 {% endif %}

@@ -27,8 +27,6 @@ export const handleLogin = async (username, password) => {
   const token = await generateJwt(
     {
       id: user.id,
-      username: user.username,
-      email: user.email,
     },
     process.env.JWT_SECRET,
   )

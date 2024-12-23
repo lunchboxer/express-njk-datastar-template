@@ -1,4 +1,6 @@
 import { verifyAndDecodeJwt } from '../utils/crypto.js'
+import { client } from '../models/db.js'
+import { queries } from '../models/queryLoader.js'
 
 export const authMiddleware = async (req, _res, next) => {
   const token = req.cookies?.auth
@@ -17,7 +19,15 @@ export const authMiddleware = async (req, _res, next) => {
       return next()
     }
 
-    const user = await verifyAndDecodeJwt(token, secretKey)
+    const { id } = await verifyAndDecodeJwt(token, secretKey)
+
+    const { getUserById } = queries
+    const userResult = await client.execute({
+      sql: getUserById,
+      args: [id],
+    })
+
+    const user = userResult.rows[0]
 
     req.user = user
 

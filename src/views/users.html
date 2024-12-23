@@ -7,11 +7,29 @@
 <p>No users found</p>
 {% else %}
 <p>Found {{ users.length }} users</p>
-<ul>
-    {% for user in users %}
-    <li>{{ user.name }}</li>
-    {% endfor %}
-</ul>
+<table>
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>ID</th>
+            <th>Roles</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.name or '-' }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.id }}</td>
+            <td>{{ user.roles or '-' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 {% endif %}
 
 {% endblock %}
