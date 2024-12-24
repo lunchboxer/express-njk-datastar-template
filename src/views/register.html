@@ -3,55 +3,53 @@
 {% from "partials/input.html" import input %}
 
 {% block content %}
-<div class="centered">
-    <form id="register-form" method="post">
-        <h2>Register</h2>
-        {{ input(
-        name="username",
-        label="Username",
-        type="text",
-        value=username,
-        required=true,
-        errors=errors
-        ) }}
+<form id="register-form" method="post">
+    <h2>Register</h2>
+    {{ input(
+    name="username",
+    label="Username",
+    type="text",
+    value=username,
+    required=true,
+    errors=errors
+    ) }}
 
-        {{ input(
-        name="email",
-        label="Email",
-        type="email",
-        value=email,
-        required=true,
-        errors=errors
-        ) }}
+    {{ input(
+    name="email",
+    label="Email",
+    type="email",
+    value=email,
+    required=true,
+    errors=errors
+    ) }}
 
-        {{ input(
-        name="password",
-        label="Password",
-        type="password",
-        value=password,
-        required=true,
-        errors=errors
-        ) }}
+    {{ input(
+    name="password",
+    label="Password",
+    type="password",
+    value=password,
+    required=true,
+    errors=errors
+    ) }}
 
-        {{ input(
-        name="name",
-        label="Name (Optional)",
-        type="text",
-        value=name,
-        errors=errors
-        ) }}
+    {{ input(
+    name="name",
+    label="Name (Optional)",
+    type="text",
+    value=name,
+    errors=errors
+    ) }}
 
-        {% if error.all %}
-        <p class="error">{{error.all}}</p>
-        {% endif %}
+    {% if error.all %}
+    <p class="error">{{error.all}}</p>
+    {% endif %}
 
 
-        <div class="button-group">
-            <button class="form-submit" type="submit">
-                Register
-            </button>
-        </div>
-    </form>
-</div>
+    <div class="button-group">
+        <button class="form-submit" type="submit">
+            Register
+        </button>
+    </div>
+</form>
 
 {% endblock %}

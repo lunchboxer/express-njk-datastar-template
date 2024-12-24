@@ -1,0 +1,23 @@
+<li class="notification {{type}}" data-timeout="3000" id="notification-{{id}}">
+    {% if type == "success" %}
+    {% include "icons/check-circle.svg" %}
+    {% elif type == "error" %}
+    {% include "icons/alert-triangle.svg" %}
+    {% else %}
+    {% include "icons/info.svg" %}
+    {% endif %}
+    <p class="notification-message">{{message}}</p>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const notification = document.querySelector('#notification-{{id}}')
+            const timeout = notification.dataset.timeout || 3000; // Default 3 seconds
+            setTimeout(() => {
+                notification.classList.add('fade-out');
+                notification.addEventListener('animationend', () => {
+                    notification.remove();
+                }, {once: true});
+            }, timeout);
+        })
+    </script>
+</li>

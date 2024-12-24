@@ -59,7 +59,7 @@ export const handleRegister = async ({ username, password, email, name }) => {
   const { createUser } = queries
   await client.execute({
     sql: createUser,
-    args: [userId, username, name, email, hashedPassword],
+    args: [userId, username, name, email, hashedPassword, 'user'],
   })
   const token = await generateJwt({ id: userId }, process.env.JWT_SECRET)
 
