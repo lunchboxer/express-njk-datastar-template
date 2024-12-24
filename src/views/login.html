@@ -3,36 +3,33 @@
 {% from "partials/input.html" import input %}
 
 {% block content %}
-<div class="centered">
-    <form id="login-form" method="post">
+  <script>
+
+  </script>
+<div class="container" data-signals="{errors: '', usernameExists: false}">
         <h2>Login</h2>
-        {{ input(
-        name="username",
-        label="Username",
-        type="text",
-        value=username,
-        required=true,
-        errors=errors
-        ) }}
-
-        {{ input(
-        name="password",
-        label="Password",
-        type="password",
-        value=password,
-        required=true,
-        errors=errors
-        ) }}
-
-        {% if error %}
-        <p class="error">{{error}}</p>
-        {% endif %}
-        <div class="button-group">
-            <button type="submit">
-                Login
+  <div class="form-group">
+<label for="username">Username</label>
+      <input type="text" name="username" id="username" data-class-exists="usernameExists.value" data-bind-username data-on-keydown__debounce.500ms="sse('/magic/auth/validate-username', {method: 'post'})">
+        <p class="success" data-show="usernameExists.value">Username found.</p>
+  </div>
+<div class="form-group">
+  <label for="password">Password</label>
+  <input type="password" name="password" id="password" data-bind-password required data-on-keydown__window="evt.key == 'Enter' && sse('/magic/auth/login', { method: 'POST' })">
+</div>
+    <p class="error" data-text="errors.value"></p>
+        <div class="button-group" data-show="usernameExists.value">
+            <button data-on-click="sse('/magic/auth/login', { method: 'POST' })">
+                log in
             </button>
         </div>
-    </form>
-</div>
+  </div>
 
+<pre data-text="ctx.signals.JSON()"></pre>
+
+  <style>
+#username.exists {
+  border-color: var(--success-color);
+}
+  </style>
 {% endblock %}

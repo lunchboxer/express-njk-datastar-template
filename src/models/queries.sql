@@ -21,6 +21,9 @@ VALUES (?, ?, ?, ?, ?);
 -- name: getUserByUsername
 SELECT * FROM user WHERE username = ?;
 
+-- name: usernameExists
+SELECT EXISTS (SELECT 1 FROM user WHERE username = ?);
+
 -- name: getUserById
 SELECT
   u.id AS id,

@@ -451,23 +451,24 @@ a {
 }
 
 button.ghost-button {
-    background: none;
-    display: flex;
-    font-weight: var(--font-weight);
-    color: var(--text-color);
-    border: none;
-    padding: 0;
-    margin: 0;
+  background: none;
+  display: flex;
+  font-weight: var(--font-weight);
+  color: var(--text-color);
+  border: none;
+  padding: 0;
+  margin: 0;
 }
+
 button.ghost-button:hover {
-    color: var(--color);
-    background: none;
+  color: var(--color);
+  background: none;
 }
 
 form.inline-form {
-    display: inline;
-    padding: 0;
-    margin: 0;
+  display: inline;
+  padding: 0;
+  margin: 0;
 }
 
 a:focus,
@@ -501,7 +502,7 @@ strong {
 }
 
 em {
-    font-style: italic;
+  font-style: italic;
 }
 
 small {
@@ -532,11 +533,16 @@ th:last-child {
   padding-right: 0;
 }
 
+p.success,
 p.error {
   color: var(--error-color);
   font-size: 80%;
   padding: 0;
   margin: 0;
+}
+
+p.success {
+  color: var(--success-color);
 }
 
 .button-group {
@@ -548,16 +554,15 @@ p.error {
 }
 
 div.centered {
-    width: 100%;
-    display: flex;
-    min-height: calc(100vh - 10rem);
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  min-height: calc(100vh - 10rem);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-label.invalid
-  color: var(--error-color);
+label.invalid color: var(--error-color);
 }
 
 input:invalid,
@@ -582,13 +587,12 @@ input.invalid:focus {
   }
 }
 
-@media (min-width: 768px) {
-}
+@media (min-width: 768px) {}
 
 @media (min-width: 992px) {
-    body {
-        padding-left: 15rem;
-      }
+  body {
+    padding-left: 15rem;
+  }
 }
 
 /* @media (min-width: 1200px) {} */

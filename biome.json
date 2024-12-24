@@ -41,6 +41,11 @@
       }
     }
   },
+  "overrides": [
+    {
+      "include": ["**/*.html"]
+    }
+  ],
   "css": {
     "formatter": {
       "enabled": true,

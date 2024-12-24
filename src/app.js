@@ -8,6 +8,7 @@ import { errorHandler404, errorHandler500 } from './errorHandler.js'
 import { authMiddleware } from './middleware/auth.js'
 import { apiRouter } from './routes/api.js'
 import { authRouter } from './routes/auth.js'
+import { magicRouter } from './routes/magic/index.js'
 import { rootRouter } from './routes/root.js'
 import { userRouter } from './routes/user.js'
 
@@ -49,6 +50,7 @@ app.use('/static', express.static(join(__dirname, '../public')))
 
 app.set('view engine', 'html')
 
+app.use('/magic', magicRouter)
 app.use('/api', apiRouter)
 app.use('/users', userRouter)
 app.use('/auth', authRouter)

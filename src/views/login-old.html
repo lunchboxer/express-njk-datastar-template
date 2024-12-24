@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% from "partials/input.html" import input %}
+
+{% block content %}
+<div class="centered">
+    <form id="login-form" method="post">
+        <h2>Login</h2>
+        {{ input(
+        name="username",
+        label="Username",
+        type="text",
+        value=username,
+        required=true,
+        errors=errors,
+        onChange="sse('/auth/validate-username', { method: 'POST'})"
+        ) }}
+
+        {{ input(
+        name="password",
+        label="Password",
+        type="password",
+        value=password,
+        required=true,
+        errors=errors
+        ) }}
+
+        {% if error %}
+        <p class="error">{{error}}</p>
+        {% endif %}
+        <div class="button-group">
+            <button type="submit">
+                Login
+            </button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
