@@ -1,6 +1,6 @@
-import { verifyAndDecodeJwt } from '../utils/crypto.js'
 import { client } from '../models/db.js'
 import { queries } from '../models/queryLoader.js'
+import { verifyAndDecodeJwt } from '../utils/crypto.js'
 
 export const authMiddleware = async (req, _res, next) => {
   const token = req.cookies?.auth

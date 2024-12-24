@@ -90,11 +90,11 @@
   --primary-color: light-dark(var(--latte-mauve), var(--mocha-mauve));
   --background-color: light-dark(var(--latte-base), var(--mocha-base));
   --color: light-dark(var(--latte-text), var(--mocha-text));
-  --color-scheme: light dark;
   --contrast-bg-color: light-dark(var(--latte-mantle), var(--mocha-mantle));
   --contrastier-bg-color: light-dark(var(--latte-crust), var(--mocha-crust));
   --error-color: light-dark(var(--latte-red), var(--mocha-red));
   --success-color: light-dark(var(--latte-green), var(--mocha-green));
+  --color-scheme: light dark;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -568,6 +568,71 @@ input.invalid {
 input:invalid:focus,
 input.invalid:focus {
   border-color: var(--error-color);
+}
+
+#notification-list {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 4rem;
+    right: 50%;
+    transform: translateX(50%);
+    z-index: 1000;
+    max-width: 100%;
+    gap: 0.2rem;
+    padding: 0;
+}
+
+.notification.success {
+    --notification-color: var(--success-color);
+}
+
+.notification.error {
+    --notification-color: var(--error-color);
+}
+
+.notification {
+    --notification-color: var(--primary-color);
+    background-color: var(--contrastier-bg-color);
+    color: var(--notification-color);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 24rem;
+    padding: 1rem;
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.15);
+    animation: fade-in 0.4s ease-out;
+}
+
+.notification.fade-out {
+    animation: fade-out 0.4s ease-out forwards;
+}
+
+.notification-message {
+    flex-grow: 1;
+    padding: 0;
+    margin: 0;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 @media (min-width: 576px) {

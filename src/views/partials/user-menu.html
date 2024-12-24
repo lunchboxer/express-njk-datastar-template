@@ -32,8 +32,12 @@
                 </label>
             </li>
             {% else %}
-            <li><label for="menuCheckbox"><a href="/auth/login">Log in</a></label></li>
-            <li><label for="menuCheckbox"><a href="/auth/register">Register</a></label></li>
+            <a href="/auth/login">
+                <li><label for="menuCheckbox" onclick="this.parentNode.click();">Login</label></li>
+            </a>
+            <a href="/auth/register">
+                <li><label for="menuCheckbox" onclick="this.parentNode.click();">Register</label></li>
+            </a>
             {% endif %}
         </ul>
     </div>

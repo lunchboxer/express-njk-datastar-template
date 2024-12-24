@@ -13,12 +13,23 @@
                 {% include "partials/logo-and-title.html" %}
             </li>
             <hr />
+            {% if user.role === 'admin' %}
+            <li>
+                <h3>Admin</h3>
+            </li>
             <li><label for="navMenuCheckbox"><a href="/Users">Users</a></label></li>
+            {% endif %}
         </ul>
     </div>
 </nav>
 
 <style>
+    #navMenu h3 {
+        padding: 0;
+        font-size: 1.1rem;
+        margin: 0;
+    }
+
     #navMenu hr {
         margin: 1rem;
         border-color: var(--contrast-bg-color);

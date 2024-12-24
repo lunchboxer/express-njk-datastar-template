@@ -6,6 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=production node src/app.js",
     "dev": "node --env-file=.env --watch-path=src/ src/app.js",
+    "seed": "node --env-file=.env database/seed.js",
     "lint": "biome check",
     "format": "biome check --fix",
     "css-minify": "postcss src/app.css > public/dist/app.min.css",

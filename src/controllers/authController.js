@@ -1,4 +1,5 @@
 import { handleLogin, handleRegister } from '../models/authModel.js'
+import { sendNotification } from '../utils/send-notification.js'
 
 export const profile = (req, res, _next) => {
   const user = req.user
@@ -49,6 +50,7 @@ export const apiRegister = async (req, res) => {
 
 export const login = async (req, res, _next) => {
   try {
+    sendNotification(res, 'Login successful', 'success')
     const { username, password } = req.body
     const result = await handleLogin(username, password)
     if (result.errors) {
