@@ -2,7 +2,7 @@ import { client } from '../models/db.js'
 import { queries } from '../models/queryLoader.js'
 import { verifyAndDecodeJwt } from '../utils/crypto.js'
 
-export const authMiddleware = async (req, _res, next) => {
+export const authMiddleware = async (req, res, next) => {
   const token = req.cookies?.auth
 
   if (!token) {
@@ -30,6 +30,7 @@ export const authMiddleware = async (req, _res, next) => {
     const user = userResult.rows[0]
 
     req.user = user
+    res.locals.user = user
 
     next()
   } catch (error) {

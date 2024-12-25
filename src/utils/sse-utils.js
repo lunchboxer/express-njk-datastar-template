@@ -1,21 +1,28 @@
 export function setHeaders(res) {
+  if (res.headersSent) {
+    return
+  }
   res.set({
     'Cache-Control': 'no-cache',
     'Content-Type': 'text/event-stream',
-    Connection: 'keep-alive',
+    connection: 'keep-alive',
   })
   res.flushHeaders()
 }
 
-export function sendSSE({ res, frag, selector, merge, mergeType, end }) {
+export function mergeFragment({ res, fragments, selector, mergeMode, end }) {
   res.write('event: datastar-merge-fragments\n')
   if (selector) {
-    res.write('data: selector {selector.value}\n')
+    res.write(`data: selector ${selector}\n`)
   }
-  if (merge) {
-    res.write('data: mergeMode {mergeType.value}\n')
+  if (mergeMode) {
+    res.write(`data: mergeMode ${mergeMode}\n`)
   }
-  res.write('data: fragments {frag.value}\n\n')
+  const fragmentLines = fragments.split('\n')
+  for (const fragment of fragmentLines) {
+    res.write(`data: fragments ${fragment}\n`)
+  }
+  res.write('\n')
   if (end) {
     res.end()
   }

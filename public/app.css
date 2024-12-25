@@ -1,6 +1,5 @@
 @font-face {
   font-family: "JetBrains Mono";
-  local('JetBrains Mono'),
   src: url("/static/dist/JetBrainsMono-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
@@ -9,7 +8,6 @@
 
 @font-face {
   font-family: "JetBrains Mono";
-  local('JetBrains Mono'),
   src: url("/static/dist/JetBrainsMono-Italic.ttf") format("truetype");
   font-weight: 400;
   font-style: italic;
@@ -18,7 +16,6 @@
 
 @font-face {
   font-family: "JetBrains Mono";
-  local('JetBrains Mono ExtraBold'),
   src: url("/static/dist/JetBrainsMono-ExtraBold.ttf") format("truetype");
   font-weight: 800;
   font-style: normal;
@@ -206,7 +203,7 @@ pre {
   font-size: 1rem;
 }
 
-pre>code {
+pre > code {
   border-radius: 0;
   white-space: pre;
   display: block;
@@ -338,7 +335,6 @@ form {
   max-width: 40ch;
 }
 
-
 .inline {
   display: inline;
 }
@@ -351,7 +347,8 @@ textarea {
 
 select {
   /* background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 0 29 14" width="29"><path fill="%23d1d1d1" d="M9.37727 3.625l5.08154 6.93523L19.54036 3.625"/></svg>') center right no-repeat; */
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 8" width="30"><path fill="%23d1d1d1" d="M0,0l6,8l6-8"/></svg>') center right no-repeat;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 8" width="30"><path fill="%23d1d1d1" d="M0,0l6,8l6-8"/></svg>')
+    center right no-repeat;
   background-color: var(--contrast-bg-color);
   padding-right: 3rem;
   cursor: pointer;
@@ -562,7 +559,8 @@ div.centered {
   align-items: center;
 }
 
-label.invalid color: var(--error-color);
+label.invalid {
+  color: var(--error-color);
 }
 
 input:invalid,
@@ -576,68 +574,73 @@ input.invalid:focus {
 }
 
 #notification-list {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 4rem;
-    right: 50%;
-    transform: translateX(50%);
-    z-index: 1000;
-    max-width: 100%;
-    gap: 0.2rem;
-    padding: 0;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 3rem;
+  right: 0;
+  z-index: 1000;
+  max-width: 100%;
+  gap: 0.2rem;
+  padding: 0;
 }
 
 .notification.success {
-    --notification-color: var(--success-color);
+  --notification-color: var(--success-color);
 }
 
 .notification.error {
-    --notification-color: var(--error-color);
+  --notification-color: var(--error-color);
 }
 
 .notification {
-    --notification-color: var(--primary-color);
-    background-color: var(--contrastier-bg-color);
-    color: var(--notification-color);
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    width: 24rem;
-    padding: 1rem;
-    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.15);
-    animation: fade-in 0.4s ease-out;
+  --notification-color: var(--primary-color);
+  background-color: var(--contrastier-bg-color);
+  color: var(--notification-color);
+  border-left: 1px solid var(--notification-color);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 20rem;
+  max-width: 100%;
+  padding: 1rem;
+  box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.15);
+  animation: fade-in 0.2s ease-out;
 }
 
 .notification.fade-out {
-    animation: fade-out 0.4s ease-out forwards;
+  animation: fade-out 0.2s ease-out forwards;
 }
 
 .notification-message {
-    flex-grow: 1;
-    padding: 0;
-    margin: 0;
+  flex-grow: 1;
+  padding: 0;
+  margin: 0;
 }
 
 @keyframes fade-in {
-    0% {
-        opacity: 0;
-    }
+  0% {
+    margin-left: 100%;
+    opacity: 0;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    margin-left: 0;
+    opacity: 1;
+  }
 }
 
 @keyframes fade-out {
-    0% {
-        opacity: 1;
-    }
+  0% {
+    margin-left: 0;
+    opacity: 1;
+  }
 
-    100% {
-        opacity: 0;
-    }
+  100% {
+    margin-left: 100%;
+    opacity: 0;
+  }
 }
 
 @media (min-width: 576px) {
@@ -652,7 +655,7 @@ input.invalid:focus {
   }
 }
 
-@media (min-width: 768px) {}
+/* @media (min-width: 768px) {} */
 
 @media (min-width: 992px) {
   body {

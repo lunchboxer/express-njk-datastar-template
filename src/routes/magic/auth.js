@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import {
-  validateUsername,
   magiclogin,
+  validateUsername,
 } from '../../controllers/authController.js'
 
 const authRouther = Router()

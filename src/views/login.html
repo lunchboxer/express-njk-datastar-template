@@ -1,35 +1,31 @@
 {% extends "base.html" %}
 
-{% from "partials/input.html" import input %}
-
 {% block content %}
-  <script>
 
-  </script>
-<div class="container" data-signals="{errors: '', usernameExists: false}">
+<div class="container">
+
+  <form data-on-submit__prevent="sse('/magic/auth/login', { method: 'post'})" action="/auth/login" method="post" >
+
         <h2>Login</h2>
-  <div class="form-group">
-<label for="username">Username</label>
-      <input type="text" name="username" id="username" data-class-exists="usernameExists.value" data-bind-username data-on-keydown__debounce.500ms="sse('/magic/auth/validate-username', {method: 'post'})">
-        <p class="success" data-show="usernameExists.value">Username found.</p>
-  </div>
-<div class="form-group">
-  <label for="password">Password</label>
-  <input type="password" name="password" id="password" data-bind-password required data-on-keydown__window="evt.key == 'Enter' && sse('/magic/auth/login', { method: 'POST' })">
-</div>
-    <p class="error" data-text="errors.value"></p>
-        <div class="button-group" data-show="usernameExists.value">
-            <button data-on-click="sse('/magic/auth/login', { method: 'POST' })">
-                log in
-            </button>
+
+        <div id="login-errors">
+            {% if errors %}<p class="error">{{ errors }}</p>{% endif %}
         </div>
-  </div>
 
-<pre data-text="ctx.signals.JSON()"></pre>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" data-bind-username required />
+        </div>
 
-  <style>
-#username.exists {
-  border-color: var(--success-color);
-}
-  </style>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" data-bind-password required />
+        </div>
+
+        <div class="button-group">
+            <input type="submit"  value="Log in" />
+        </div>
+    </form>
+</div>
+
 {% endblock %}

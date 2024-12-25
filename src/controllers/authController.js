@@ -1,7 +1,7 @@
 import { handleLogin, handleRegister } from '../models/authModel.js'
 import { doesUsernameExist } from '../models/userModel.js'
-import { setHeaders } from '../utils/sse-utils.js'
 import { sendNotification } from '../utils/send-notification.js'
+import { setHeaders } from '../utils/sse-utils.js'
 
 export const profile = (req, res, _next) => {
   const user = req.user
@@ -70,7 +70,7 @@ export const login = async (req, res, _next) => {
     const redirectUrl = req.query.redirect || '/'
     return res.redirect(redirectUrl)
   } catch (error) {
-    res.render('login', { error })
+    res.render('login', { errors: error })
   }
 }
 
@@ -121,7 +121,6 @@ export const validateUsername = async (req, res, _next) => {
 }
 
 export const magiclogin = async (req, res, _next) => {
-  setHeaders(res)
   try {
     if (!req.body) {
       throw new Error('Missing request body')
@@ -135,15 +134,18 @@ export const magiclogin = async (req, res, _next) => {
         sameSite: 'strict',
       })
     }
-    res.write('event: datastar-merge-signals\n')
-    res.write('data: onlyIfMissing false\n')
-    res.write(`data: signals { success: ${result.success} }\n\n`)
+    setHeaders(res)
+    sendNotification(res, 'Login successful', 'success')
+    res.write('event: datastar-execute-script\n')
+    res.write("data: script window.location = ' / '\n\n")
     return res.end()
   } catch (error) {
     console.error('validateUsername error:', error)
-    res.write('event: datastar-merge-signals\n')
-    res.write('data: onlyIfMissing false\n')
-    res.write(`data: signals { errors: "${error}" }\n\n`)
+    setHeaders(res)
+    res.write('event: datastar-merge-fragments\n')
+    res.write(
+      `data: fragments <div id="login-errors"><p class="error">${error}</p></div>\n\n`,
+    )
     return res.end()
   }
 }

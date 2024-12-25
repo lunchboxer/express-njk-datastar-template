@@ -7,7 +7,7 @@
     "ignore": [
       "./node_modules/**",
       "./.git/**",
-      "./public/**",
+      "./dist/**",
       "./.cloudflare/**"
     ]
   },
@@ -49,8 +49,7 @@
   "css": {
     "formatter": {
       "enabled": true,
-      "indentStyle": "space",
-      "indentWidth": 2
+      "indentStyle": "space"
     }
   }
 }
