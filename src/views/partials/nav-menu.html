@@ -14,24 +14,24 @@
             </li>
             <hr />
             {% if user.role === 'admin' %}
-            <li>
+            <li class="section-title">
                 <h3>Admin</h3>
             </li>
             <li><label for="navMenuCheckbox"><a href="/Users">Users</a></label></li>
             {% endif %}
-      <li class="hide-until-big">
-        <div>
-      <h3>User</h3>
-            <li><label for="navMenuCheckbox"><a href="/auth/me">Profile</a></label></li>
-            <li>
-                <label for="menuCheckbox">
-                    <form class="inline-form" action="/auth/logout" method="post">
-                        <button class="ghost-button">Logout</button>
-                    </form>
-                </label>
-            </li>
-        </div>
-            </li>
+            <div class="hide-until-big">
+                <li class="section-title">
+                    <h3>User</h3>
+                </li>
+                <li><label for="navMenuCheckbox"><a href="/auth/me">Profile</a></label></li>
+                <li>
+                    <label for="menuCheckbox">
+                        <form class="inline-form" action="/auth/logout" method="post">
+                            <button class="ghost-button">Logout</button>
+                        </form>
+                    </label>
+                </li>
+            </div>
         </ul>
     </div>
 </nav>
@@ -40,7 +40,7 @@
     #navMenu h3 {
         padding: 0;
         font-size: 1.1rem;
-        margin: 0;
+        margin: 1rem 0 0 0;
     }
 
     #navMenu hr {
@@ -110,7 +110,12 @@
     #navMenu li {
         color: var(--color);
         margin: 0;
-        padding: 1rem 2rem;
+        padding: 0.5rem 3rem;
+    }
+
+    #navMenu li.section-title {
+        color: var(--primary-color);
+        padding: 0.5rem 2em;
     }
 
 
@@ -144,7 +149,15 @@
         width: 100%;
     }
 
+    .hide-until-big {
+        display: none;
+    }
+
     @media (min-width: 992px) {
+        .hide-until-big {
+            display: block;
+        }
+
         #navMenu .app-info {
             display: flex;
             margin: 2rem 0;
