@@ -39,3 +39,21 @@ export const authMiddleware = async (req, res, next) => {
     next()
   }
 }
+
+export const onlyAuthenticated = (req, res, next) => {
+  if (req.user) {
+    next()
+  } else {
+    const destination = req.originalUrl
+    res.redirect(`/auth/login?redirect=${destination}`)
+  }
+}
+
+export const onlyAdmins = (req, res, next) => {
+  if (req.user?.role === 'admin') {
+    next()
+  } else {
+    const destination = req.originalUrl
+    res.render('admins-only.html', { destination })
+  }
+}

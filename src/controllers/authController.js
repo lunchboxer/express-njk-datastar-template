@@ -3,17 +3,11 @@ import { doesUsernameExist } from '../models/userModel.js'
 import { sendNotification } from '../utils/send-notification.js'
 import { setHeaders } from '../utils/sse-utils.js'
 
-export const profile = (req, res, _next) => {
-  const user = req.user
-  res.render('profile', { user })
-}
-
 export const register = async (req, res, _next) => {
   try {
     const result = await handleRegister(req.body)
     if (result.errors) {
       return res.render('register', {
-        user: req.user,
         ...req.body,
         errors: result.errors,
       })
@@ -57,7 +51,6 @@ export const login = async (req, res, _next) => {
     const result = await handleLogin(username, password)
     if (result.errors) {
       return res.render('login', {
-        user: req.user,
         ...req.body,
         errors: result.errors,
       })
@@ -125,7 +118,7 @@ export const magiclogin = async (req, res, _next) => {
     if (!req.body) {
       throw new Error('Missing request body')
     }
-    const { username, password } = req.body
+    const { username, password, redirect } = req.body
     const result = await handleLogin(username, password)
     if (result.success) {
       res.cookie('auth', result.token, {
@@ -137,7 +130,7 @@ export const magiclogin = async (req, res, _next) => {
     setHeaders(res)
     sendNotification(res, 'Login successful', 'success')
     res.write('event: datastar-execute-script\n')
-    res.write("data: script window.location = ' / '\n\n")
+    res.write(`data: script window.location = '${redirect || '/'}'\n\n`)
     return res.end()
   } catch (error) {
     console.error('validateUsername error:', error)

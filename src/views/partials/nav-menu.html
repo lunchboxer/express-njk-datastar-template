@@ -19,6 +19,7 @@
             </li>
             <li><label for="navMenuCheckbox"><a href="/Users">Users</a></label></li>
             {% endif %}
+            {% if user %}
             <div class="hide-until-big">
                 <li class="section-title">
                     <h3>User</h3>
@@ -32,6 +33,7 @@
                     </label>
                 </li>
             </div>
+            {% endif %}
         </ul>
     </div>
 </nav>
@@ -113,9 +115,13 @@
         padding: 0.5rem 3rem;
     }
 
+    #navMenu li.close {
+        padding: 1rem 2rem;
+    }
+
     #navMenu li.section-title {
         color: var(--primary-color);
-        padding: 0.5rem 2em;
+        padding: 0.5rem 2rem;
     }
 
 
