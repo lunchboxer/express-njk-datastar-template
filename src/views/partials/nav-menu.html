@@ -1,4 +1,4 @@
-<nav role="navigation">
+<nav id="mainNav" role="navigation">
     <div id="navMenuToggle">
         <input type="checkbox" id="navMenuCheckbox" />
 
@@ -19,6 +19,19 @@
             </li>
             <li><label for="navMenuCheckbox"><a href="/Users">Users</a></label></li>
             {% endif %}
+      <li class="hide-until-big">
+        <div>
+      <h3>User</h3>
+            <li><label for="navMenuCheckbox"><a href="/auth/me">Profile</a></label></li>
+            <li>
+                <label for="menuCheckbox">
+                    <form class="inline-form" action="/auth/logout" method="post">
+                        <button class="ghost-button">Logout</button>
+                    </form>
+                </label>
+            </li>
+        </div>
+            </li>
         </ul>
     </div>
 </nav>
@@ -132,7 +145,6 @@
     }
 
     @media (min-width: 992px) {
-
         #navMenu .app-info {
             display: flex;
             margin: 2rem 0;
@@ -151,6 +163,5 @@
             transform: none;
             overflow-y: auto;
         }
-
     }
 </style>
