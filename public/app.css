@@ -203,7 +203,7 @@ pre {
   font-size: 1rem;
 }
 
-pre>code {
+pre > code {
   border-radius: 0;
   white-space: pre;
   display: block;
@@ -347,7 +347,8 @@ textarea {
 
 select {
   /* background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 0 29 14" width="29"><path fill="%23d1d1d1" d="M9.37727 3.625l5.08154 6.93523L19.54036 3.625"/></svg>') center right no-repeat; */
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 8" width="30"><path fill="%23d1d1d1" d="M0,0l6,8l6-8"/></svg>') center right no-repeat;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 8" width="30"><path fill="%23d1d1d1" d="M0,0l6,8l6-8"/></svg>')
+    center right no-repeat;
   background-color: var(--contrast-bg-color);
   padding-right: 3rem;
   cursor: pointer;
