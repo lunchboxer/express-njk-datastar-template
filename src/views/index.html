@@ -2,17 +2,6 @@
 
 {% block content %}
 
-<h1>Welcome to Newstack DataStar Test</h1>
-
-{% if user %}
-<p>Logged in as: {{ user.username }}</p>
-{% else %}
-<p>Not logged in.</p>
-{% endif %}
-
-<div class="counter" data-signals="{count: 0}">
-    <p>Counter: <span data-text="count.value"></span></p>
-    <button data-on-click="count.value += 1">Increment</button>
-</div>
+{% include "pages/index.html" %}
 
 {% endblock %}

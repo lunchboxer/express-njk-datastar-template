@@ -1,0 +1,12 @@
+<main>
+    <h2>Profile</h2>
+    {% if user %}
+    <p>Username: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Name: {{ user.name or '-' }}</p>
+    <p>Role: {{ user.role }}</p>
+    <p>ID: {{ user.id }}</p>
+    {% else %}
+    <p>You are not logged in.</p>
+    {% endif %}
+</main>

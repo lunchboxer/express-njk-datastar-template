@@ -11,7 +11,7 @@ authRouter.get('/register', (_req, res) => {
   res.render('register')
 })
 
-authRouter.get('/me', onlyAuthenticated, (_req, res) => {
+authRouter.get('/profile', onlyAuthenticated, (_req, res) => {
   res.render('profile')
 })
 

@@ -1,6 +1,6 @@
 <nav id="mainNav" role="navigation">
     <div id="navMenuToggle">
-        <input type="checkbox" id="navMenuCheckbox" />
+        <input type="checkbox" id="navMenuCheckbox" data-ref-navMenuCheckbox />
 
         <span class="trigger">
             {% include "icons/menu.svg" %}
@@ -17,14 +17,26 @@
             <li class="section-title">
                 <h3>Admin</h3>
             </li>
-            <li><label for="navMenuCheckbox"><a href="/Users">Users</a></label></li>
+            <a href="/Users" data-on-click__prevent="sse('/magic/users');navMenuCheckbox.click()">
+                <li>
+                    <label for="navMenuCheckbox">
+                        Users
+                    </label>
+                </li>
+            </a>
             {% endif %}
             {% if user %}
             <div class="hide-until-big">
                 <li class="section-title">
                     <h3>User</h3>
                 </li>
-                <li><label for="navMenuCheckbox"><a href="/auth/me">Profile</a></label></li>
+                <a href="/auth/profile" data-on-click__prevent="sse('/magic/profile');navMenuCheckbox.click()">
+                    <li>
+                        <label for="navMenuCheckbox">
+                            Profile
+                        </label>
+                    </li>
+                </a>
                 <li>
                     <label for="menuCheckbox">
                         <form class="inline-form" action="/auth/logout" method="post">

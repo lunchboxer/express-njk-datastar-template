@@ -2,11 +2,15 @@ import { Router } from 'express'
 import {
   magiclogin,
   validateUsername,
+  loadPlainAuthPage,
 } from '../../controllers/authController.js'
 
-const authRouther = Router()
+const authRouter = Router()
 
-authRouther.post('/validate-username', validateUsername)
-authRouther.post('/login', magiclogin)
+authRouter.post('/validate-username', validateUsername)
+authRouter.post('/login', magiclogin)
+authRouter.get('/profile', loadPlainAuthPage)
+authRouter.get('/login', loadPlainAuthPage)
+authRouter.get('/register', loadPlainAuthPage)
 
-export { authRouther }
+export { authRouter }

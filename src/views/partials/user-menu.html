@@ -1,6 +1,6 @@
 <nav role="navigation">
     <div id="menuToggle">
-        <input type="checkbox" id="menuCheckbox" />
+        <input type="checkbox" id="menuCheckbox" data-ref-menuCheckbox />
 
         <span class="trigger">
             {% include "icons/user.svg" %}
@@ -18,7 +18,7 @@
             </li>
             {% if user.id %}
             <hr />
-            <a href="/auth/me">
+            <a href="/auth/profile" data-on-click__prevent="sse('/magic/auth/profile');menuCheckbox.click()">
                 <li>
                     <label for="menuCheckbox" onclick="this.parentNode.click();">Profile</label>
                 </li>
@@ -32,11 +32,11 @@
                 </label>
             </li>
             {% else %}
-            <a href="/auth/login">
-                <li><label for="menuCheckbox" onclick="this.parentNode.click();">Login</label></li>
+            <a href="/auth/login" data-on-click__prevent="sse('/magic/auth/login');menuCheckbox.click()">
+                <li><label for="menuCheckbox">Login</label></li>
             </a>
-            <a href="/auth/register">
-                <li><label for="menuCheckbox" onclick="this.parentNode.click();">Register</label></li>
+            <a href="/auth/register" data-on-click__prevent="sse('/magic/auth/register');menuCheckbox.click()">
+                <li><label for="menuCheckbox">Register</label></li>
             </a>
             {% endif %}
         </ul>

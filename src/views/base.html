@@ -6,15 +6,15 @@
     <title>{{ title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/static/app.css" type="text/css" />
-    <script type="module" src="/static/dist/datastar.js"></script>
+    <script type="module" src="/static/dist/datastar-0-21-4-9749015e8a0414d4.js"></script>
 </head>
 
 <body>
     {% include "partials/header.html" %}
+    {% block content %}
     <main>
-        {% block content %}
-        {% endblock %}
     </main>
+    {% endblock %}
     {% include "partials/footer.html" %}
 
     <ul id="notification-list"></ul>

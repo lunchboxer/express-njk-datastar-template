@@ -1,3 +1,5 @@
+import { renderTemplate } from './utils.js'
+
 export function setHeaders(res) {
   if (res.headersSent) {
     return
@@ -26,4 +28,29 @@ export function mergeFragment({ res, fragments, selector, mergeMode, end }) {
   if (end) {
     res.end()
   }
+}
+
+export function loadPage({ req, res, templatePath, url, data }) {
+  const { baseUrl, path } = req
+  const newBaseUrl = baseUrl.replace('/magic', '')
+
+  const newUrl = url ? url : newBaseUrl + path
+
+  let newTemplatePath
+  if (templatePath) {
+    newTemplatePath = templatePath
+  } else {
+    newTemplatePath =
+      url === '/'
+        ? `pages${newBaseUrl}/index.html`
+        : `pages${newBaseUrl}${path}.html`
+  }
+  const fragments = renderTemplate(newTemplatePath, data)
+  mergeFragment({
+    res,
+    fragments,
+    selector: 'main',
+  })
+  res.write('event: datastar-execute-script\n')
+  res.write(`data: script window.history.replaceState({}, "", "${newUrl}")\n\n`)
 }

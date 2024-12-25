@@ -1,10 +1,14 @@
 import { Router } from 'express'
-import { authRouther } from './auth.js'
+import { authRouter } from './auth.js'
+import { rootRouter } from './root.js'
+import { userRouter } from './user.js'
 
 const magicRouter = Router()
 
 magicRouter
-  .use('/auth', authRouther)
+  .use('/', rootRouter)
+  .use('/auth', authRouter)
+  .use('/users', userRouter)
 
   .use((err, _req, res, _next) => {
     console.error(err)

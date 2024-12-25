@@ -1,12 +1,9 @@
-import { join } from 'node:path'
 import nunjucks from 'nunjucks'
 import { mergeFragment } from './sse-utils.js'
-
-const __dirname = import.meta.dirname
+import { renderTemplate } from './utils.js'
 
 export const sendNotification = (res, message, type = 'info', delay = 2000) => {
-  nunjucks.configure(join(__dirname, '../views'), { autoescape: true })
-  const notification = nunjucks.render('partials/notification.html', {
+  const notification = renderTemplate('partials/notification.html', {
     id: Date.now(),
     message: nunjucks.renderString(message),
     type,

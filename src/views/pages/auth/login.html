@@ -1,0 +1,29 @@
+<main>
+    <div class="container" data-signals-redirect="new URLSearchParams(window.location.search).get('redirect')">
+
+        <form data-on-submit__prevent="sse('/magic/auth/login', { method: 'post'})" action="/auth/login" method="post">
+
+            <h2>Login</h2>
+
+            <div id="login-errors">
+                {% if errors %}<p class="error">{{ errors }}</p>{% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" data-bind-username required />
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" data-bind-password required />
+            </div>
+
+            <div class="button-group">
+                <input type="submit" value="Log in" />
+            </div>
+        </form>
+        <p>Don't have an account? <a href="/auth/register" data-on-click__prevent="sse('/magic/auth/register')">Create
+                one now.</a></p>
+    </div>
+</main>

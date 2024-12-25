@@ -1,7 +1,14 @@
 import { handleLogin, handleRegister } from '../models/authModel.js'
 import { doesUsernameExist } from '../models/userModel.js'
 import { sendNotification } from '../utils/send-notification.js'
-import { setHeaders } from '../utils/sse-utils.js'
+import { loadPage, setHeaders } from '../utils/sse-utils.js'
+import { loadHome } from './rootController.js'
+
+export const loadPlainAuthPage = (req, res, _next) => {
+  setHeaders(res)
+  loadPage({ req, res, data: { user: req.user } })
+  return res.end()
+}
 
 export const register = async (req, res, _next) => {
   try {
@@ -129,8 +136,7 @@ export const magiclogin = async (req, res, _next) => {
     }
     setHeaders(res)
     sendNotification(res, 'Login successful', 'success')
-    res.write('event: datastar-execute-script\n')
-    res.write(`data: script window.location = '${redirect || '/'}'\n\n`)
+    loadPage({ req, res, templatePath: 'pages/index.html', url: '/' })
     return res.end()
   } catch (error) {
     console.error('validateUsername error:', error)
