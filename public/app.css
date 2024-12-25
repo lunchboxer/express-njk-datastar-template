@@ -226,7 +226,7 @@ button,
 input[type="reset"],
 input[type="button"],
 input[type="submit"] {
-  padding: 0.8rem 2rem;
+  padding: 0 2rem;
   font-family: var(--font-family);
   border: 1px solid var(--primary-color);
   border-radius: 0.5rem;
@@ -235,6 +235,10 @@ input[type="submit"] {
   cursor: pointer;
   font-weight: var(--font-weight-bold);
   display: inline-block;
+  display: inline-flex;
+  height: 3rem;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   text-decoration: none;
   margin: 1rem 0;
