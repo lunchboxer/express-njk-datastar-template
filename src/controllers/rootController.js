@@ -1,7 +1,11 @@
-import { setHeaders, loadPage } from '../utils/sse-utils.js'
+import { loadPage } from '../utils/sse-utils.js'
 
 export const loadHome = (req, res, _next) => {
-  setHeaders(res)
-  loadPage({ req, res })
-  return res.end()
+  if (req.query?.datastar) {
+    return loadPage({ req, res })
+  }
+  res.render('index.html', {
+    title: 'Home Page',
+    user: req.user,
+  })
 }

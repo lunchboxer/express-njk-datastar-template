@@ -1,16 +1,12 @@
 import { Router } from 'express'
-import {
-  apiLogin,
-  apiLogout,
-  apiRegister,
-} from '../controllers/authController.js'
+import { login, logout, apiRegister } from '../controllers/authController.js'
 
 const apiRouter = Router()
 
 apiRouter
-  .post('/login', apiLogin)
+  .post('/login', login)
   .post('/register', apiRegister)
-  .post('/logout', apiLogout)
+  .post('/logout', logout)
 
   .use((err, _req, res, _next) => {
     console.error(err)

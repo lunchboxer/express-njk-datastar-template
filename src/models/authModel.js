@@ -30,8 +30,20 @@ export const handleLogin = async (username, password) => {
     },
     process.env.JWT_SECRET,
   )
+  const userWithoutPassword = {
+    username: user.username,
+    id: user.id,
+    role: user.role,
+    email: user.email,
+    name: user.name,
+  }
 
-  return { success: true, message: 'Login successful', token }
+  return {
+    success: true,
+    message: 'Login successful',
+    token,
+    user: userWithoutPassword,
+  }
 }
 
 export const handleRegister = async ({ username, password, email, name }) => {

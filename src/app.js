@@ -6,9 +6,9 @@ import livereload from 'livereload'
 import nunjucks from 'nunjucks'
 import { errorHandler404, errorHandler500 } from './errorHandler.js'
 import { authMiddleware } from './middleware/auth.js'
+import { setHeadersMiddleware } from './middleware/sse-headers.js'
 import { apiRouter } from './routes/api.js'
 import { authRouter } from './routes/auth.js'
-import { magicRouter } from './routes/magic/index.js'
 import { rootRouter } from './routes/root.js'
 import { userRouter } from './routes/user.js'
 
@@ -35,10 +35,11 @@ if (dev) {
 }
 
 // Add middleware for parsing JSON, cookies, and setting user context
+app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(authMiddleware)
+app.use(setHeadersMiddleware)
 
 nunjucks.configure(join(__dirname, 'views'), {
   autoescape: true,
@@ -50,7 +51,6 @@ app.use('/static', express.static(join(__dirname, '../public')))
 
 app.set('view engine', 'html')
 
-app.use('/magic', magicRouter)
 app.use('/api', apiRouter)
 app.use('/users', userRouter)
 app.use('/auth', authRouter)

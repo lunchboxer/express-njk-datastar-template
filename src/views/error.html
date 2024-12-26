@@ -1,13 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<main>
-    <h2>Error: {{ status }}</h2>
-    <p>{{ message }}</p>
-    {% if process.env.NODE_ENV !== 'production' %}
-    <h3>Stack trace</h3>
-    <pre>{{ error.stack }}</pre>
-    {% endif %}
-    <p><a href="/">Go back to the home page</a></p>
-</main>
+
+{% include "pages/error.html" %}
+
 {% endblock %}

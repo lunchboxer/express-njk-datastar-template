@@ -1,5 +1,5 @@
 <main>
-    <form id="register-form" method="post">
+    <form id="register-form" method="post" data-on-submit="sse('/auth/register', { method: 'post' })">
         <h2>Register</h2>
 
         <div class="input-group" id="username-group">
@@ -42,8 +42,8 @@
             <label for="name" class="label {% if errors.name%}invalid{% endif %}">
                 Name (Optional)
             </label>
-            <input name="name" id="login-name-input" required value="{{name}}" data-bind-name {% if errors.name
-                %}class="invalid" {% endif %}>
+            <input name="name" id="login-name-input" value="{{name}}" data-bind-name {% if errors.name %}class="invalid"
+                {% endif %}>
 
             {% if errors.name %}
             <p class="error">{{ errors.name }}</p>

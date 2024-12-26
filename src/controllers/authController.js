@@ -1,35 +1,12 @@
 import { handleLogin, handleRegister } from '../models/authModel.js'
-import { doesUsernameExist } from '../models/userModel.js'
 import { sendNotification } from '../utils/send-notification.js'
-import { loadPage, setHeaders } from '../utils/sse-utils.js'
-import { loadHome } from './rootController.js'
-
-export const loadPlainAuthPage = (req, res, _next) => {
-  setHeaders(res)
-  loadPage({ req, res, data: { user: req.user } })
-  return res.end()
-}
-
-export const register = async (req, res, _next) => {
-  try {
-    const result = await handleRegister(req.body)
-    if (result.errors) {
-      return res.render('register', {
-        ...req.body,
-        errors: result.errors,
-      })
-    }
-    res.cookie('auth', result.token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-    })
-    const redirectUrl = req.query.redirect || '/'
-    return res.redirect(redirectUrl)
-  } catch (error) {
-    res.render('register', { user: req.user, error })
-  }
-}
+import {
+  reloadHeader,
+  setHeaders,
+  magicRedirect,
+  mergeFragment,
+} from '../utils/sse-utils.js'
+import { renderTemplate } from '../utils/utils.js'
 
 export const apiRegister = async (req, res) => {
   try {
@@ -53,11 +30,77 @@ export const apiRegister = async (req, res) => {
 
 export const login = async (req, res, _next) => {
   try {
-    sendNotification(res, 'Login successful', 'success')
+    if (!req.body) {
+      throw new Error('Missing request body')
+    }
     const { username, password } = req.body
+    if (!username && password) {
+      throw new Error('Username and password are required')
+    }
     const result = await handleLogin(username, password)
     if (result.errors) {
-      return res.render('login', {
+      if (req.body?.sse) {
+        mergeFragment({
+          res,
+          fragments: `<div id="login-errors"><p class="error">${result.errors}</p></div>`,
+        })
+      }
+      if (req.accepts('json')) {
+        return res.status(400).json({ errors: result.errors })
+      }
+      return res.render('login', { ...req.body, errors: result.errors })
+    }
+    res.cookie('auth', result.token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+    })
+    const redirectUrl = req.query.redirect || '/'
+
+    if (req.body?.sse) {
+      setHeaders(res)
+      res.write('event: datastar-remove-signals\n')
+      res.write('data: paths username \n')
+      res.write('data: paths password \n\n')
+      sendNotification(res, 'Login successful', 'success')
+      magicRedirect(res, redirectUrl)
+      reloadHeader(res, result.user)
+      return res.end()
+    }
+
+    if (req.accepts('json')) {
+      return res.json(result)
+    }
+    return res.redirect(redirectUrl)
+  } catch (error) {
+    if (req.body?.sse) {
+      return mergeFragment({
+        res,
+        fragments: `<div id="login-errors"><p class="error">${error}</p></div>`,
+      })
+    }
+    if (req.accepts('json')) {
+      return res.status(400).json({ error: error.message })
+    }
+    return res.render('login', { errors: error.message })
+  }
+}
+
+export const register = async (req, res, _next) => {
+  try {
+    const result = await handleRegister(req.body)
+    if (result.errors) {
+      if (req.body?.sse) {
+        setHeaders(res)
+        return mergeFragment({
+          res,
+          fragments: renderTemplate('pages/auth/register.html', {
+            errors: result.errors,
+          }),
+          selector: 'main',
+        })
+      }
+      return res.render('register', {
         ...req.body,
         errors: result.errors,
       })
@@ -68,83 +111,45 @@ export const login = async (req, res, _next) => {
       sameSite: 'strict',
     })
     const redirectUrl = req.query.redirect || '/'
-    return res.redirect(redirectUrl)
-  } catch (error) {
-    res.render('login', { errors: error })
-  }
-}
-
-export const apiLogin = async (req, res) => {
-  try {
-    if (!req.body) {
-      throw new Error('Missing request body')
-    }
-    const { username, password } = req.body
-    const result = await handleLogin(username, password)
-    if (result.errors) {
-      return res.status(400).json({ errors: result.errors })
-    }
-    res.cookie('auth', result.token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-    })
-    return res.json(result)
-  } catch (error) {
-    console.error('API Login error:', error)
-    return res.status(400).json({ error: error.message })
-  }
-}
-
-export const logout = (_req, res) => res.clearCookie('auth').redirect('/')
-export const apiLogout = (_req, res) =>
-  res.clearCookie('auth').status(204).end()
-
-export const validateUsername = async (req, res, _next) => {
-  setHeaders(res)
-  try {
-    if (!req.body) {
-      throw new Error('Missing request body')
-    }
-    const { username } = req.body
-    if (!username) {
+    if (req.body?.sse) {
+      setHeaders(res)
+      res.write('event: datastar-remove-signals\n')
+      res.write('data: paths username \n')
+      res.write('data: paths password \n\n')
+      sendNotification(res, 'Registration successful', 'success')
+      magicRedirect(res, redirectUrl)
+      reloadHeader(res, result.user)
       return res.end()
     }
-    const usernameExists = await doesUsernameExist(username)
-    res.write('event: datastar-merge-signals\n')
-    res.write('data: onlyIfMissing false\n')
-    res.write(`data: signals { usernameExists: ${usernameExists} }\n\n`)
-    return res.end()
+    return res.redirect(redirectUrl)
   } catch (error) {
-    console.error('validateUsername error:', error)
+    if (req.body.sse) {
+      setHeaders(res)
+      return mergeFragment({
+        res,
+        fragments: renderTemplate('pages/auth/register.html', {
+          errors: { all: error },
+        }),
+        selector: 'main',
+      })
+    }
+    res.render('register', { user: req.user, error })
   }
 }
 
-export const magiclogin = async (req, res, _next) => {
-  try {
-    if (!req.body) {
-      throw new Error('Missing request body')
-    }
-    const { username, password, redirect } = req.body
-    const result = await handleLogin(username, password)
-    if (result.success) {
-      res.cookie('auth', result.token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
-      })
-    }
+export const logout = (req, res) => {
+  res.clearCookie('auth')
+  if (req.body?.sse) {
     setHeaders(res)
-    sendNotification(res, 'Login successful', 'success')
-    loadPage({ req, res, templatePath: 'pages/index.html', url: '/' })
+    magicRedirect(res, '/')
+    reloadHeader(res)
+    sendNotification(res, 'Logout successful', 'success')
     return res.end()
-  } catch (error) {
-    console.error('validateUsername error:', error)
-    setHeaders(res)
-    res.write('event: datastar-merge-fragments\n')
-    res.write(
-      `data: fragments <div id="login-errors"><p class="error">${error}</p></div>\n\n`,
-    )
-    return res.end()
+  }
+  if (req.accepts('html')) {
+    return res.redirect('/')
+  }
+  if (req.accepts('json')) {
+    return res.status(204)
   }
 }

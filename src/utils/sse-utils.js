@@ -29,21 +29,28 @@ export function mergeFragment({ res, fragments, selector, mergeMode, end }) {
     res.end()
   }
 }
+export function magicRedirect(res, url) {
+  res.write('event: datastar-execute-script\n')
+  res.write('data: autoRemove true\n')
+  res.write(`data: script window.history.pushState({}, "", "${url}")\n`)
+  res.write(
+    "data: script var popStateEvent = new PopStateEvent('popstate', {state: null});\n",
+  )
+  res.write('data: script window.dispatchEvent(popStateEvent);\n\n')
+}
 
 export function loadPage({ req, res, templatePath, url, data }) {
+  console.error('loadPage', req.path)
   const { baseUrl, path } = req
-  const newBaseUrl = baseUrl.replace('/magic', '')
-
-  const newUrl = url ? url : newBaseUrl + path
+  const newUrl = url ? url : baseUrl + path
 
   let newTemplatePath
   if (templatePath) {
     newTemplatePath = templatePath
   } else {
-    newTemplatePath =
-      url === '/'
-        ? `pages${newBaseUrl}/index.html`
-        : `pages${newBaseUrl}${path}.html`
+    newTemplatePath = newUrl.endsWith('/')
+      ? `pages${newUrl}index.html`
+      : `pages${newUrl}.html`
   }
   const fragments = renderTemplate(newTemplatePath, data)
   mergeFragment({
@@ -51,6 +58,15 @@ export function loadPage({ req, res, templatePath, url, data }) {
     fragments,
     selector: 'main',
   })
-  res.write('event: datastar-execute-script\n')
-  res.write(`data: script window.history.replaceState({}, "", "${newUrl}")\n\n`)
+}
+
+export function reloadHeader(res, user) {
+  const navMenu = renderTemplate('partials/nav-menu.html', {
+    user,
+  })
+  mergeFragment({
+    res,
+    fragments: navMenu,
+    selector: '#mainNav',
+  })
 }

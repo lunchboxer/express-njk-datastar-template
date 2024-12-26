@@ -1,11 +1,11 @@
-<nav id="mainNav" role="navigation">
-    <div id="navMenuToggle">
-        <input type="checkbox" id="navMenuCheckbox" data-ref-navMenuCheckbox />
+<nav id="mainNav" role="navigation" class="full">
+    <div id="navMenuToggle" class="menuToggle">
+        <input type="checkbox" id="navMenuCheckbox" />
 
         <span class="trigger">
             {% include "icons/menu.svg" %}
         </span>
-        <ul id="navMenu">
+        <ul id="navMenu" class="menu">
             <li class="close">
                 {% include "icons/x.svg" %}
             </li>
@@ -17,7 +17,7 @@
             <li class="section-title">
                 <h3>Admin</h3>
             </li>
-            <a href="/Users" data-on-click__prevent="sse('/magic/users');navMenuCheckbox.click()">
+            <a href="/users" data-on-click="navMenuCheckbox.click()">
                 <li>
                     <label for="navMenuCheckbox">
                         Users
@@ -25,174 +25,41 @@
                 </li>
             </a>
             {% endif %}
+            <li class="section-title">
+                <h3>User</h3>
+            </li>
             {% if user %}
-            <div class="hide-until-big">
-                <li class="section-title">
-                    <h3>User</h3>
-                </li>
-                <a href="/auth/profile" data-on-click__prevent="sse('/magic/profile');navMenuCheckbox.click()">
-                    <li>
-                        <label for="navMenuCheckbox">
-                            Profile
-                        </label>
-                    </li>
-                </a>
+            <a href="/auth/profile" data-on-click=";navMenuCheckbox.click()">
                 <li>
-                    <label for="menuCheckbox">
-                        <form class="inline-form" action="/auth/logout" method="post">
-                            <button class="ghost-button">Logout</button>
-                        </form>
+                    <label for="navMenuCheckbox">
+                        Profile
                     </label>
                 </li>
-            </div>
+            </a>
+            <li>
+                <label for="menuCheckbox">
+                    <form class="inline-form" action="/auth/logout" method="post"
+                        data-on-submit="sse('/auth/logout', {method: 'POST' })">
+                        <button class="ghost-button">Logout</button>
+                    </form>
+                </label>
+            </li>
+            {% else %}
+            <a href="/auth/login" data-on-click=";navMenuCheckbox.click()">
+                <li>
+                    <label for="navMenuCheckbox">
+                        Log in
+                    </label>
+                </li>
+            </a>
+            <a href="/auth/register" data-on-click=";navMenuCheckbox.click()">
+                <li>
+                    <label for="navMenuCheckbox">
+                        Register
+                    </label>
+                </li>
+            </a>
             {% endif %}
         </ul>
     </div>
 </nav>
-
-<style>
-    #navMenu h3 {
-        padding: 0;
-        font-size: 1.1rem;
-        margin: 1rem 0 0 0;
-    }
-
-    #navMenu hr {
-        margin: 1rem;
-        border-color: var(--contrast-bg-color);
-    }
-
-    #navMenuToggle {
-        display: block;
-        position: relative;
-        -webkit-user-select: none;
-        user-select: none;
-    }
-
-    #navMenuToggle a {
-        text-decoration: none;
-        color: var(--color);
-
-        transition: color 0.3s ease;
-    }
-
-    #navMenuToggle a:hover {
-        color: var(--primary-color);
-    }
-
-
-    #navMenuToggle input {
-        display: block;
-        width: 2rem;
-        height: 2rem;
-        position: fixed;
-        top: 0.5rem;
-        left: 0.5rem;
-        cursor: pointer;
-        opacity: 0;
-        z-index: 2;
-        -webkit-touch-callout: none;
-    }
-
-
-    #navMenuToggle span:first-child {
-        transform-origin: 0% 0%;
-    }
-
-    #navMenuToggle span:nth-last-child(2) {
-        transform-origin: 0% 100%;
-    }
-
-    #navMenu {
-        position: absolute;
-        top: -1rem;
-        left: -2rem;
-        width: 15rem;
-        height: 100svh;
-        padding: 0;
-        box-sizing: border-box;
-        overflow-y: auto;
-        background: var(--contrastier-bg-color);
-        list-style-type: none;
-        -webkit-font-smoothing: antialiased;
-        transform-origin: 0% 0%;
-        transform: translate(-100%, 0);
-        transition: transform 0.3s cubic-bezier(0.77, 0.2, 0.05, 1.0);
-        margin: 0;
-    }
-
-    #navMenu li {
-        color: var(--color);
-        margin: 0;
-        padding: 0.5rem 3rem;
-    }
-
-    #navMenu li.close {
-        padding: 1rem 2rem;
-    }
-
-    #navMenu li.section-title {
-        color: var(--primary-color);
-        padding: 0.5rem 2rem;
-    }
-
-
-    #navMenu li label {
-        margin: 0;
-        padding: 0;
-        cursor: pointer;
-    }
-
-    #navMenu li:has(label):hover {
-        background-color: var(--contrast-bg-color);
-    }
-
-    #navMenuToggle input:checked~ul {
-        transform: none;
-    }
-
-    #navMenuToggle .app-info {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        margin: 1rem;
-    }
-
-    #navMenuToggle input:checked+.trigger {
-        visibility: hidden;
-    }
-
-    #navMenu .close {
-        display: flex;
-        width: 100%;
-    }
-
-    .hide-until-big {
-        display: none;
-    }
-
-    @media (min-width: 992px) {
-        .hide-until-big {
-            display: block;
-        }
-
-        #navMenu .app-info {
-            display: flex;
-            margin: 2rem 0;
-        }
-
-        #navMenuToggle input,
-        #navMenuToggle .trigger,
-        #navMenu .close {
-            display: none;
-        }
-
-        #navMenu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            transform: none;
-            overflow-y: auto;
-        }
-    }
-</style>
