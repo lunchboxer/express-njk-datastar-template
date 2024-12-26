@@ -5,9 +5,7 @@ import { loadPage } from '../utils/sse-utils.js'
 const authRouter = Router()
 
 authRouter.get('/login', (req, res) => {
-  console.error('authRouter.get /login', req.path)
   if (req.query?.datastar) {
-    console.error('made past datastarcheck')
     return loadPage({
       req,
       res,

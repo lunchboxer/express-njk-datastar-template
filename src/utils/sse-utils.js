@@ -40,7 +40,6 @@ export function magicRedirect(res, url) {
 }
 
 export function loadPage({ req, res, templatePath, url, data }) {
-  console.error('loadPage', req.path)
   const { baseUrl, path } = req
   const newUrl = url ? url : baseUrl + path
 
