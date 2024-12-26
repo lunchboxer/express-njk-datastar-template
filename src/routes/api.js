@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { login, logout, apiRegister } from '../controllers/authController.js'
+import { apiRegister, login, logout } from '../controllers/authController.js'
 
 const apiRouter = Router()
 
