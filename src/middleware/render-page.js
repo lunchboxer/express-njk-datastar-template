@@ -12,7 +12,7 @@ export const renderMiddleware = (req, res, next) => {
       if (options.reloadHeader) {
         reloadHeader(res, data.user)
       }
-      return
+      return res.end()
     }
     if (req.accepts('html')) {
       return res.render('base', { includeTemplate: templatePath, ...data })

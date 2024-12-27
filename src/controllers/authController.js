@@ -33,7 +33,7 @@ const loginResponseHandlers = {
       sendNotification(res, 'Login successful', 'success')
       magicRedirect(res, redirectUrl)
       reloadHeader(res, result.user)
-      res.end()
+      return res.end()
     },
     error: (res, error) => {
       mergeFragment({
@@ -106,7 +106,7 @@ export const register = async (req, res, _next) => {
   try {
     const result = await handleRegister(req.body)
     if (result.errors) {
-      res.renderPage(undefined, { ...req.body, errors: result.errors })
+      return res.renderPage(undefined, { ...req.body, errors: result.errors })
     }
     setAuthCookie(res, result.token)
     const redirectUrl = req.query.redirect || '/'
@@ -122,7 +122,7 @@ export const register = async (req, res, _next) => {
     }
     return res.redirect(redirectUrl)
   } catch (error) {
-    res.renderPage(undefined, { errors: { all: error } })
+    return res.renderPage(undefined, { errors: { all: error } })
   }
 }
 

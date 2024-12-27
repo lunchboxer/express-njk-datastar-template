@@ -17,41 +17,41 @@
             <li class="section-title">
                 <h3>Admin</h3>
             </li>
-            <a href="/users" data-on-click="navMenuCheckbox.click()">
-                <li>
-                    <label for="navMenuCheckbox">
+            <li>
+                <label for="navMenuCheckbox">
+                    <a href="/users" data-on-click="navMenuCheckbox.click()">
                         Users
-                    </label>
-                </li>
-            </a>
+                    </a>
+                </label>
+            </li>
             {% endif %}
             <li class="section-title">
                 <h3>User</h3>
             </li>
             {% if user %}
-            <a href="/auth/profile" data-on-click="navMenuCheckbox.click()">
-                <li>
-                    <label for="navMenuCheckbox">
+            <li>
+                <label for="navMenuCheckbox">
+                    <a href="/auth/profile" data-on-click="navMenuCheckbox.click()" >
                         Profile
-                    </label>
-                </li>
-            </a>
-            <a href="/auth/logout"
+                    </a>
+                </label>
+            </li>
+                <li>
+                    <label for="navMenuCheckbox">
+                        <a href="/auth/logout"
                 data-on-click__prevent="sse('/auth/logout', { method: 'POST' }); navMenuCheckbox.click()">
-                <li>
-                    <label for="navMenuCheckbox">
-                        Log out
+                            Log out
+                        </a>
                     </label>
                 </li>
-            </a>
             {% else %}
-            <a href="/auth/login" data-on-click="navMenuCheckbox.click()">
                 <li>
                     <label for="navMenuCheckbox">
-                        Log in
+                        <a href="/auth/login" data-on-click="navMenuCheckbox.click()">
+                            Log in
+                        </a>
                     </label>
                 </li>
-            </a>
             <a href="/auth/register" data-on-click="navMenuCheckbox.click()">
                 <li>
                     <label for="navMenuCheckbox">

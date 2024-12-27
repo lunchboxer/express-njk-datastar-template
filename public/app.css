@@ -22,6 +22,10 @@
   font-display: swap;
 }
 
+@view-transition {
+  navigation: auto;
+}
+
 :root {
   --font-family: "JetBrains Mono", Roboto, Helvetica, Arial, sans-serif;
   --font-size: 16px;
@@ -606,11 +610,11 @@ input.invalid:focus {
   max-width: 100%;
   padding: 1rem;
   box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.15);
-  animation: fade-in 0.2s ease-out;
+  animation: slide-in 0.2s ease-out;
 }
 
-.notification.fade-out {
-  animation: fade-out 0.2s ease-out forwards;
+.notification.slide-out {
+  animation: slide-out 0.2s ease-out forwards;
 }
 
 .notification-message {
@@ -619,7 +623,7 @@ input.invalid:focus {
   margin: 0;
 }
 
-@keyframes fade-in {
+@keyframes slide-in {
   0% {
     margin-left: 100%;
     opacity: 0;
@@ -631,7 +635,7 @@ input.invalid:focus {
   }
 }
 
-@keyframes fade-out {
+@keyframes slide-out {
   0% {
     margin-left: 0;
     opacity: 1;
@@ -676,6 +680,7 @@ a.title-link {
   font-weight: 800;
   font-size: 1.2rem;
 }
+
 .menu #main-title h1 {
   font-size: 1.1rem;
 }
@@ -699,13 +704,15 @@ nav ul.menu hr {
 }
 
 .menuToggle a {
+  display: block;
   text-decoration: none;
   color: var(--color);
   transition: color 0.3s ease;
+  padding: 1rem 3rem;
 }
 
 .menuToggle a:hover {
-  color: var(--primary-color);
+  background-color: var(--contrast-bg-color);
 }
 
 .menuToggle input {
@@ -728,6 +735,7 @@ nav ul.menu hr {
 #navMenuToggle span:nth-last-child(2) {
   transform-origin: 0% 100%;
 }
+
 #mainNav .trigger {
   position: fixed;
   top: 1rem;
@@ -750,6 +758,7 @@ nav ul.menu {
   /* z-index: 5; */
   margin: 0;
 }
+
 nav.full ul.menu {
   height: 100svh;
   overflow-y: auto;
@@ -758,7 +767,7 @@ nav.full ul.menu {
 nav li {
   color: var(--color);
   margin: 0;
-  padding: 0.5rem 3rem;
+  padding: 0;
 }
 
 nav li.section-title {
@@ -769,11 +778,6 @@ nav li.section-title {
 nav li label {
   margin: 0;
   padding: 0;
-  cursor: pointer;
-}
-
-nav li:has(label):hover {
-  background-color: var(--contrast-bg-color);
 }
 
 #navMenuToggle input:checked ~ ul {
@@ -804,6 +808,18 @@ form.inline-form {
   margin: 0;
 }
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
 @media (min-width: 576px) {
   table {
     max-width: calc(100vw - 4rem);
@@ -819,6 +835,7 @@ form.inline-form {
   main {
     padding: 2rem 4rem;
   }
+
   #mainNav .trigger {
     top: 2rem;
     left: 2rem;
@@ -832,6 +849,7 @@ form.inline-form {
     top: 1.5rem;
     left: 1.5rem;
   }
+
   #mainNav li.close {
     padding: 1rem 2rem;
   }
@@ -849,6 +867,7 @@ form.inline-form {
   #mainNav {
     visibility: visible;
   }
+
   #navMenu {
     padding: 0;
   }
@@ -856,6 +875,7 @@ form.inline-form {
   header .center {
     visibility: hidden;
   }
+
   .hide-until-big {
     display: block;
   }
@@ -882,6 +902,7 @@ form.inline-form {
     transform: none;
     overflow-y: auto;
   }
+
   .hide-on-big {
     display: none;
   }
