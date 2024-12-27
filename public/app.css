@@ -653,12 +653,6 @@ a.title-link {
   }
 }
 
-@media (max-width: 576px) {
-  button.ghost-button span {
-    display: none;
-  }
-}
-
 #main-title {
   color: var(--color);
   position: absolute;
@@ -744,7 +738,7 @@ nav ul.menu {
   top: 0;
   left: -1rem;
   width: 15rem;
-  padding: 1rem;
+  padding: 1rem 0 0 1rem;
   box-sizing: border-box;
   background: var(--contrastier-bg-color);
   list-style-type: none;
@@ -825,6 +819,9 @@ form.inline-form {
 }
 
 @media (min-width: 768px) {
+  main {
+    padding: 2rem 4rem;
+  }
   #mainNav .trigger {
     top: 2rem;
     left: 2rem;
