@@ -126,7 +126,7 @@ export const register = async (req, res, _next) => {
   }
 }
 
-export const logout = (req, res) => {
+export const magicLogout = (req, res) => {
   res.clearCookie('auth')
   if (req.body?.sse) {
     setHeaders(res)
@@ -135,6 +135,15 @@ export const logout = (req, res) => {
     sendNotification(res, 'Logout successful', 'success')
     return res.end()
   }
+  if (req.accepts('html')) {
+    return res.redirect('/')
+  }
+  if (req.accepts('json')) {
+    return res.status(204)
+  }
+}
+export const logout = (req, res) => {
+  res.clearCookie('auth')
   if (req.accepts('html')) {
     return res.redirect('/')
   }

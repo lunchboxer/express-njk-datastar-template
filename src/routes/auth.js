@@ -1,5 +1,10 @@
 import { Router } from 'express'
-import { login, logout, register } from '../controllers/authController.js'
+import {
+  login,
+  logout,
+  magicLogout,
+  register,
+} from '../controllers/authController.js'
 import { onlyAuthenticated } from '../middleware/auth.js'
 const authRouter = Router()
 
@@ -17,6 +22,7 @@ authRouter.get('/profile', onlyAuthenticated, (req, res) =>
 
 authRouter.post('/register', register)
 authRouter.post('/login', login)
-authRouter.post('/logout', logout)
+authRouter.get('/logout', logout)
+authRouter.post('/logout', magicLogout)
 
 export { authRouter }

@@ -29,30 +29,30 @@
                 <h3>User</h3>
             </li>
             {% if user %}
-            <a href="/auth/profile" data-on-click=";navMenuCheckbox.click()">
+            <a href="/auth/profile" data-on-click="navMenuCheckbox.click()">
                 <li>
                     <label for="navMenuCheckbox">
                         Profile
                     </label>
                 </li>
             </a>
-            <li>
-                <label for="menuCheckbox">
-                    <form class="inline-form" action="/auth/logout" method="post"
-                        data-on-submit="sse('/auth/logout', {method: 'POST' })">
-                        <button class="ghost-button">Logout</button>
-                    </form>
-                </label>
-            </li>
+            <a href="/auth/logout"
+                data-on-click__prevent="sse('/auth/logout', { method: 'POST' }); navMenuCheckbox.click()">
+                <li>
+                    <label for="navMenuCheckbox">
+                        Log out
+                    </label>
+                </li>
+            </a>
             {% else %}
-            <a href="/auth/login" data-on-click=";navMenuCheckbox.click()">
+            <a href="/auth/login" data-on-click="navMenuCheckbox.click()">
                 <li>
                     <label for="navMenuCheckbox">
                         Log in
                     </label>
                 </li>
             </a>
-            <a href="/auth/register" data-on-click=";navMenuCheckbox.click()">
+            <a href="/auth/register" data-on-click="navMenuCheckbox.click()">
                 <li>
                     <label for="navMenuCheckbox">
                         Register
