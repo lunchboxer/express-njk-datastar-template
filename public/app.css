@@ -511,6 +511,7 @@ table {
   overflow-x: auto;
   text-align: left;
   width: 100%;
+  max-width: calc(100vw - 2rem);
 }
 
 td,
@@ -808,8 +809,7 @@ form.inline-form {
 
 @media (min-width: 576px) {
   table {
-    display: table;
-    overflow-x: initial;
+    max-width: calc(100vw - 4rem);
   }
 
   main {
