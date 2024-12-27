@@ -1,8 +1,0 @@
-<main>
-    <h2>Error {{ status }} - {{ error.message }}</h2>
-    {% if process.env.NODE_ENV !== 'production' %}
-    <h3>Stack trace</h3>
-    <pre>{{ error.stack }}</pre>
-    {% endif %}
-    <p><a href="/">Go back to the home page</a></p>
-</main>

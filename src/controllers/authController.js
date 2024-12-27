@@ -6,7 +6,6 @@ import {
   reloadHeader,
   setHeaders,
 } from '../utils/sse-utils.js'
-import { renderTemplate } from '../utils/utils.js'
 
 export const apiRegister = async (req, res) => {
   try {
@@ -17,11 +16,7 @@ export const apiRegister = async (req, res) => {
     if (result.errors) {
       return res.status(400).json({ errors: result.errors })
     }
-    res.cookie('auth', result.token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-    })
+    setAuthCookie(res, result.token)
     res.status(201).json(result)
   } catch (error) {
     res.status(400).json({ error: error.message })
@@ -54,7 +49,10 @@ const loginResponseHandlers = {
   html: {
     success: (res, _result, redirectUrl) => res.redirect(redirectUrl),
     error: (res, error, body) =>
-      res.render('login', { ...body, errors: error.message }),
+      res.render('base', {
+        ...body,
+        errors: error.message,
+      }),
   },
 }
 
@@ -108,20 +106,7 @@ export const register = async (req, res, _next) => {
   try {
     const result = await handleRegister(req.body)
     if (result.errors) {
-      if (req.body?.sse) {
-        setHeaders(res)
-        return mergeFragment({
-          res,
-          fragments: renderTemplate('pages/auth/register.html', {
-            errors: result.errors,
-          }),
-          selector: 'main',
-        })
-      }
-      return res.render('register', {
-        ...req.body,
-        errors: result.errors,
-      })
+      res.renderPage(undefined, { ...req.body, errors: result.errors })
     }
     setAuthCookie(res, result.token)
     const redirectUrl = req.query.redirect || '/'
@@ -137,17 +122,7 @@ export const register = async (req, res, _next) => {
     }
     return res.redirect(redirectUrl)
   } catch (error) {
-    if (req.body.sse) {
-      setHeaders(res)
-      return mergeFragment({
-        res,
-        fragments: renderTemplate('pages/auth/register.html', {
-          errors: { all: error },
-        }),
-        selector: 'main',
-      })
-    }
-    res.render('register', { user: req.user, error })
+    res.renderPage(undefined, { errors: { all: error } })
   }
 }
 

@@ -1,8 +1,7 @@
 import { Router } from 'express'
-import { loadHome } from '../controllers/rootController.js'
 
 const rootRouter = Router()
 
-rootRouter.get('/', loadHome)
+rootRouter.get('/', (_req, res) => res.renderPage())
 
 export { rootRouter }

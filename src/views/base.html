@@ -7,12 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/static/app.css" type="text/css" />
     <script>
-        // intercept nvavigation clicks for smooth client-side navigation
         document.addEventListener('click', event => {
             const target = event.target.closest('a')
             if (target?.href && target.origin === window.location.origin) {
                 event.preventDefault()
-                window.history.pushState(null, '', target.href)
+                if (target.pathname === window.location.pathname) {
+                    return
+                }
+                window.history.pushState(null, '', target.pathname)
                 var popStateEvent = new PopStateEvent('popstate', {state: null});
                 window.dispatchEvent(popStateEvent);
             }
@@ -27,8 +29,7 @@
     </div>
     {% include "partials/nav-menu.html" %}
     {% block content %}
-    <main>
-    </main>
+    {% include includeTemplate %}
     {% endblock %}
     {% include "partials/footer.html" %}
 

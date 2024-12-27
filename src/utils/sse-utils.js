@@ -39,19 +39,8 @@ export function magicRedirect(res, url) {
   res.write('data: script window.dispatchEvent(popStateEvent);\n\n')
 }
 
-export function loadPage({ req, res, templatePath, url, data }) {
-  const { baseUrl, path } = req
-  const newUrl = url ? url : baseUrl + path
-
-  let newTemplatePath
-  if (templatePath) {
-    newTemplatePath = templatePath
-  } else {
-    newTemplatePath = newUrl.endsWith('/')
-      ? `pages${newUrl}index.html`
-      : `pages${newUrl}.html`
-  }
-  const fragments = renderTemplate(newTemplatePath, data)
+export function loadPage({ req, res, templatePath = req.templatePath, data }) {
+  const fragments = renderTemplate(templatePath, data)
   mergeFragment({
     res,
     fragments,

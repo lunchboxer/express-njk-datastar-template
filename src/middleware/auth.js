@@ -1,6 +1,7 @@
 import { client } from '../models/db.js'
 import { queries } from '../models/queryLoader.js'
 import { verifyAndDecodeJwt } from '../utils/crypto.js'
+import { loadPage } from '../utils/sse-utils.js'
 
 export const authMiddleware = async (req, res, next) => {
   const token = req.cookies?.auth
@@ -54,6 +55,17 @@ export const onlyAdmins = (req, res, next) => {
     next()
   } else {
     const destination = req.originalUrl
-    res.render('admins-only.html', { destination })
+    if (req.body?.sse) {
+      loadPage({
+        req,
+        res,
+        templatePath: 'auth/admins-only.html',
+        user: req.user,
+      })
+    }
+    res.render('base', {
+      includeTemplate: 'auth/admins-only.html',
+      destination,
+    })
   }
 }
