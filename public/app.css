@@ -782,9 +782,6 @@ nav li:has(label):hover {
 
 #navMenuToggle .app-info {
   display: none;
-  flex-direction: column;
-  align-items: center;
-  margin: 1rem;
 }
 
 #navMenuToggle input:checked + .trigger {
@@ -852,6 +849,9 @@ form.inline-form {
   #mainNav {
     visibility: visible;
   }
+  #navMenu {
+    padding: 0;
+  }
 
   header .center {
     visibility: hidden;
@@ -862,7 +862,11 @@ form.inline-form {
 
   #navMenu .app-info {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin: 2rem 0;
+    padding: 1rem 0;
   }
 
   #navMenuToggle input,
