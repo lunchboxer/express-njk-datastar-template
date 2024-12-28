@@ -1,6 +1,5 @@
-import { nanoid } from 'nanoid'
 import { generateJwt, hashPassword, passwordMatches } from '../utils/crypto.js'
-import { client } from './db.js'
+import { client, generateId } from './db.js'
 import { queries } from './queryLoader.js'
 
 export const handleLogin = async (username, password) => {
@@ -66,7 +65,7 @@ export const handleRegister = async ({ username, password, email, name }) => {
   }
 
   const hashedPassword = await hashPassword(password)
-  const userId = nanoid()
+  const userId = generateId()
 
   const { createUser } = queries
   await client.execute({

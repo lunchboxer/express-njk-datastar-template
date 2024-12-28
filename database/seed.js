@@ -1,11 +1,10 @@
-import { nanoid } from 'nanoid'
-import { client } from '../src/models/db.js'
+import { client, generateId } from '../src/models/db.js'
 import { queries } from '../src/models/queryLoader.js'
 import { hashPassword } from '../src/utils/crypto.js'
 
 const createUser = async (username, password, email, name, role) => {
   const hashedPassword = await hashPassword(password)
-  const userId = nanoid()
+  const userId = generateId()
 
   const { createUser } = queries
   await client.execute({
