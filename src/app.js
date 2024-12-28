@@ -56,7 +56,7 @@ app.use('/static', express.static(join(__dirname, '../public')))
 app.set('view engine', 'html')
 
 app.use('/api', apiRouter)
-app.use('/users', userRouter)
+app.use('/user', userRouter)
 app.use('/auth', authRouter)
 app.use('/', rootRouter)
 

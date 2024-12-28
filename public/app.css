@@ -229,7 +229,6 @@ input[type="submit"] {
   padding: 0 2rem;
   font-family: var(--font-family);
   border: 1px solid var(--primary-color);
-  border-radius: 0.5rem;
   background-color: var(--background-color);
   color: var(--primary-color);
   cursor: pointer;
@@ -243,6 +242,7 @@ input[type="submit"] {
   text-decoration: none;
   margin: 1rem 0;
   font-size: 1rem;
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.15);
 }
 
 input[type="submit"] {
@@ -351,7 +351,7 @@ textarea {
 
 select {
   /* background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 0 29 14" width="29"><path fill="%23d1d1d1" d="M9.37727 3.625l5.08154 6.93523L19.54036 3.625"/></svg>') center right no-repeat; */
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 8" width="30"><path fill="%23d1d1d1" d="M0,0l6,8l6-8"/></svg>')
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 8" width="30"><path fill="%23b1b1b1" d="M0,0l6,8l6-8"/></svg>')
     center right no-repeat;
   background-color: var(--contrast-bg-color);
   padding-right: 3rem;
@@ -658,44 +658,6 @@ input.invalid:focus {
   }
 }
 
-a.title-link {
-  text-decoration: none;
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-
-  :hover {
-    color: var(--color);
-  }
-}
-
-#main-title {
-  color: var(--color);
-  position: absolute;
-  top: 1rem;
-  right: 50%;
-  transform: translateX(50%);
-}
-
-#main-title .logo {
-  margin: 0;
-  padding: 0;
-  color: var(--color);
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-#main-title h1 {
-  margin: 0;
-  padding: 0;
-  font-weight: 800;
-  font-size: 1.2rem;
-}
-
-.menu #main-title h1 {
-  font-size: 1.1rem;
-}
-
 nav ul.menu h3 {
   padding: 0;
   font-size: 1.1rem;
@@ -757,7 +719,7 @@ nav ul.menu {
   position: absolute;
   top: 0;
   left: -1rem;
-  width: 15rem;
+  width: 14rem;
   padding: 1rem 0 0 1rem;
   box-sizing: border-box;
   background: var(--contrastier-bg-color);
@@ -789,6 +751,57 @@ nav li.section-title {
 nav li label {
   margin: 0;
   padding: 0;
+}
+
+a.title-link {
+  text-decoration: none;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0;
+  align-items: center;
+
+  :hover {
+    color: var(--color);
+  }
+}
+
+#main-title {
+  color: var(--color);
+  position: absolute;
+  top: 1rem;
+  right: 50%;
+  transform: translateX(50%);
+}
+
+#navMenuToggle #main-title {
+  position: unset;
+  right: unset;
+  top: unset;
+  transform: unset;
+}
+
+#main-title .logo {
+  margin: 0;
+  padding: 0;
+  color: var(--color);
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+#main-title:hover {
+  background: none;
+}
+
+#main-title h1 {
+  margin: 0;
+  padding: 0;
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+.menu #main-title h1 {
+  font-size: 1.1rem;
+  text-wrap: nowrap;
 }
 
 #navMenuToggle input:checked ~ ul {
@@ -829,6 +842,23 @@ form.inline-form {
   to {
     opacity: 0;
   }
+}
+
+dl {
+  overflow: hidden;
+}
+
+dt {
+  float: left;
+  width: 30%;
+  text-align: left;
+  padding-right: 0.5rem;
+  font-weight: bold;
+}
+
+dd {
+  overflow: hidden;
+  margin-left: 40%;
 }
 
 @media (min-width: 576px) {

@@ -16,3 +16,6 @@ SELECT EXISTS (SELECT 1 FROM user WHERE username = ?);
 
 -- name: getUserById
 SELECT id, username, name, email, role FROM user WHERE id = ?;
+
+-- name: updateUserById
+UPDATE user SET username = ?, name = ?, email = ?, role = ? WHERE id = ?;
