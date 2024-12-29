@@ -93,6 +93,11 @@ export const login = async (req, res, _next) => {
   }
 }
 
+export const changePassword = async (req, res, _next) => {
+  console.error('req.body', req.body)
+  res.render('auth/profile', { title: 'User Profile', user: req.user })
+}
+
 export const register = async (req, res, _next) => {
   try {
     const { username, password, email, name } = req.body

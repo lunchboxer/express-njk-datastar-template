@@ -17,8 +17,14 @@ SELECT id, username, name, email, role, password FROM user WHERE username = ?;
 -- name: getUserById
 SELECT id, username, name, email, role FROM user WHERE id = ?;
 
+-- name: getUserByIdWithPassword
+SELECT id, username, name, email, role, password FROM user WHERE id = ?;
+
 -- name: updateUserById
 UPDATE user SET username = ?, name = ?, email = ?, role = ? WHERE id = ?;
+
+-- name: updateUserByIdWithPassword
+UPDATE user SET username = ?, name = ?, email = ?, role = ?, password = ? WHERE id = ?;
 
 -- name: removeUserById
 DELETE FROM user WHERE id = ?;
@@ -34,3 +40,6 @@ SELECT EXISTS (SELECT 1 FROM user WHERE email = ?);
 
 -- name: emailTakenExcludingId
 SELECT EXISTS (SELECT 1 FROM user WHERE email = ? AND id != ?);
+
+-- name: updateUserPassword
+UPDATE user SET password = ? WHERE id = ?;

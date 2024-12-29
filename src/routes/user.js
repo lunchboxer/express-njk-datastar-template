@@ -8,7 +8,8 @@ import {
   showUser,
   showUserForm,
 } from '../controllers/userController.js'
-import { onlyAdmins } from '../middleware/auth.js'
+import { changePassword } from '../controllers/authController.js'
+import { onlyAdmins, onlyAuthenticated } from '../middleware/auth.js'
 const userRouter = Router()
 
 userRouter
@@ -19,5 +20,6 @@ userRouter
   .get('/:id/edit', onlyAdmins, showUserForm)
   .post('/:id', onlyAdmins, editUser)
   .post('/:id/delete', onlyAdmins, deleteUser)
+  .post('/:id/change-password', onlyAuthenticated, changePassword)
 
 export { userRouter }

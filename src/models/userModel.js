@@ -335,4 +335,61 @@ export const User = {
     })
     return !!result?.rows[0]?.[0]
   },
+
+  patch: async (id, data) => {
+    const { getUserByIdWithPassword } = queries
+    const result = await client.execute({
+      sql: getUserByIdWithPassword,
+      args: [id],
+    })
+    const existingUser = result?.rows[0]
+    if (!existingUser) {
+      return { data: null, errors: { all: 'User not found' } }
+    }
+
+    const updateData = {
+      username: data.username || existingUser.username,
+      name: data.name === '' ? null : data.name || existingUser.name,
+      email: data.email || existingUser.email,
+      role: data.role || existingUser.role,
+      password: data.password || existingUser.password,
+    }
+
+    const validationResult = User._validate(
+      updateData,
+      USER_VALIDATION_RULES.create,
+    )
+    if (!validationResult.isValid) {
+      return { data: null, errors: validationResult.errors }
+    }
+
+    const uniqueErrors = await User._checkUniqueContraints(updateData, id)
+    if (Object.keys(uniqueErrors).length > 0) {
+      return { data: null, errors: uniqueErrors }
+    }
+
+    try {
+      const { updateUserByIdWithPassword } = queries
+      await client.execute({
+        sql: updateUserByIdWithPassword,
+        args: [
+          updateData.username,
+          updateData.name,
+          updateData.email,
+          updateData.role,
+          updateData.password,
+          id,
+        ],
+      })
+      return {
+        data: { ...updateData, id },
+        errors: null,
+      }
+    } catch (error) {
+      return {
+        data: null,
+        errors: { all: error.message },
+      }
+    }
+  },
 }

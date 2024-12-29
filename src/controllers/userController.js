@@ -77,3 +77,42 @@ export const checkUsernameAvailability = async (req, res, _next) => {
   const usernameTaken = await User.isUsernameTaken(req.body.username)
   return res.json({ usernameTaken })
 }
+
+export const changePassword = async (req, res, next) => {
+  const isAdminReset = req.body.admin_reset === 'true'
+
+  let adminUser = null
+  if (isAdminReset) {
+    if (req.user.role !== 'admin') {
+      const error = new Error('Unauthorized')
+      error.status = 403
+      return next(error)
+    }
+    adminUser = req.user
+  }
+
+  const { errors } = await User.changePassword(
+    req.params.id,
+    req.body,
+    isAdminReset ? { adminUser } : {},
+  )
+
+  if (errors) {
+    const { data: user, errors: userErrors } = await User.findById(
+      req.params.id,
+    )
+    if (userErrors) {
+      const error = new Error(userErrors.all)
+      error.status = 404
+      return next(error)
+    }
+
+    return res.render('user/edit', {
+      title: 'Edit User',
+      selectedUser: user,
+      errors,
+    })
+  }
+
+  return res.redirect(`/user/${req.params.id}`)
+}
