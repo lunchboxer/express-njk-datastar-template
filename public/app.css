@@ -93,6 +93,7 @@
 }
 
 @view-transition {
+  /* biome-ignore lint/correctness/noUnknownProperty: new property in Chrome, fails gracefully in other browsers */
   navigation: auto;
 }
 

@@ -29,6 +29,12 @@ const USER_VALIDATION_RULES = {
 }
 
 export const User = {
+  /**
+   * Merges base validation rules with specific validation rules
+   * @param {Object} baseRules - The base validation rules to start with
+   * @param {Object} [specificRules={}] - Optional specific rules to merge into base rules
+   * @returns {Object} Merged validation rules
+   */
   _mergeValidationRules: (baseRules, specificRules = {}) => {
     const mergedRules = { ...baseRules }
 
@@ -41,6 +47,12 @@ export const User = {
 
     return mergedRules
   },
+  /**
+   * Validates user data against specified validation rules
+   * @param {Object} data - The user data to validate
+   * @param {Object} [specificRules={}] - Optional specific validation rules
+   * @returns {Object} Validation result with isValid flag and optional errors
+   */
   _validate: (data, specificRules = {}) => {
     const rules = User._mergeValidationRules(
       USER_VALIDATION_RULES.base,
@@ -48,6 +60,29 @@ export const User = {
     )
 
     return validate(data, rules)
+  },
+
+  /**
+   * Checks unique constraints for username and email
+   * @param {Object} data - The user data to check for uniqueness
+   * @param {string} [excludeId] - Optional user ID to exclude from uniqueness check
+   * @returns {Promise<Object>} Object containing any uniqueness constraint errors
+   */
+  _checkUniqueContraints: async (data, excludeId) => {
+    const errors = {}
+    if (data.username) {
+      const usernameTaken = await User.isUsernameTaken(data.username, excludeId)
+      if (usernameTaken) {
+        errors.username = 'Username already exists'
+      }
+    }
+    if (data.email) {
+      const emailTaken = await User.isEmailTaken(data.email, excludeId)
+      if (emailTaken) {
+        errors.email = 'Email already exists'
+      }
+    }
+    return errors
   },
 
   /**
@@ -128,33 +163,23 @@ export const User = {
    */
   update: async (id, data) => {
     // Find existing user
-    const existingUser = await User.findById(id)
-    if (!existingUser) {
+    const existingUserResponse = await User.findById(id)
+    if (!existingUserResponse.data) {
       return { data: null, errors: { all: 'User not found' } }
     }
 
-    // Validate input data
+    const existingUser = existingUserResponse.data
+
     const validationResult = User._validate(data)
     if (!validationResult.isValid) {
       return { data: null, errors: validationResult.errors }
     }
 
-    // Check for unique constraints if fields have changed
-    if (data.username && data.username !== existingUser.username) {
-      const usernameTaken = await User.isUsernameTaken(data.username, id)
-      if (usernameTaken) {
-        return { data: null, errors: { username: 'Username already exists' } }
-      }
+    const uniqueErrors = await User._checkUniqueContraints(data, id)
+    if (Object.keys(uniqueErrors).length > 0) {
+      return { data: null, errors: uniqueErrors }
     }
 
-    if (data.email && data.email !== existingUser.email) {
-      const emailTaken = await User.isEmailTaken(data.email, id)
-      if (emailTaken) {
-        return { data: null, errors: { email: 'Email already exists' } }
-      }
-    }
-
-    // Prepare update data, using existing values if not provided
     const updateData = {
       username: data.username || existingUser.username,
       name: data.name === '' ? null : data.name || existingUser.name,
@@ -194,8 +219,8 @@ export const User = {
    * An object containing either the deleted user or an error
    */
   remove: async id => {
-    const existingUser = await User.findById(id)
-    if (!existingUser) {
+    const existingUserResponse = await User.findById(id)
+    if (!existingUserResponse.data) {
       return {
         data: null,
         errors: {
@@ -210,7 +235,7 @@ export const User = {
         args: [id],
       })
       return {
-        data: existingUser,
+        data: existingUserResponse.data,
         errors: null,
       }
     } catch (error) {
@@ -221,6 +246,17 @@ export const User = {
     }
   },
 
+  /**
+   * Creates a new user in the database
+   * @param {Object} data - The user data to create
+   * @param {string} data.username - The user's username (required)
+   * @param {string} data.email - The user's email (required)
+   * @param {string} data.password - The user's password
+   * @param {string} [data.name] - Optional user's name
+   * @param {string} [data.role='user'] - Optional user role, defaults to 'user'
+   * @returns {Promise<{data: {id: string}|null, errors: Object|null}>}
+   * An object containing either the created user's ID or validation/creation errors
+   */
   create: async data => {
     const validationResult = User._validate(data, USER_VALIDATION_RULES.create)
 
@@ -231,24 +267,9 @@ export const User = {
       }
     }
 
-    const usernameTaken = await User.isUsernameTaken(data.username)
-    if (usernameTaken) {
-      return {
-        data: null,
-        errors: {
-          username: 'Username already exists',
-        },
-      }
-    }
-
-    const emailTaken = await User.isEmailTaken(data.email)
-    if (emailTaken) {
-      return {
-        data: null,
-        errors: {
-          email: 'Email already exists',
-        },
-      }
+    const uniqueErrors = await User._checkUniqueContraints(data)
+    if (Object.keys(uniqueErrors).length > 0) {
+      return { data: null, errors: uniqueErrors }
     }
 
     try {
