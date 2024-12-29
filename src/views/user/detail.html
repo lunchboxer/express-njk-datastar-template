@@ -1,20 +1,25 @@
-<main id="content">
+{% extends "base.html" %}
+{% block content %}
+
+<main>
     <h2>User Details</h2>
 
-  <dl>
-    <dt>Username</dt>
-    <dd>{{ user.username }}</dd>
-    <dt>Name</dt>
-    <dd>{{ user.name }}</dd>
-    <dt>Email</dt>
-    <dd>{{ user.email }}</dd>
-    <dt>Role</dt>
-    <dd>{{ user.role }}</dd>
-    <dt>ID</dt>
-    <dd>{{ user.id }}</dd>
-  </dl>
-  <div>
-    <a class="button" href="/user/{{ user.id }}/edit">Edit</a>
-    <button>Delete</button>
-  </div>
+    <dl>
+        <dt>Username</dt>
+        <dd>{{ user.username }}</dd>
+        <dt>Name</dt>
+        <dd>{{ user.name }}</dd>
+        <dt>Email</dt>
+        <dd>{{ user.email }}</dd>
+        <dt>Role</dt>
+        <dd>{{ user.role }}</dd>
+        <dt>ID</dt>
+        <dd>{{ user.id }}</dd>
+    </dl>
+    <div>
+        <a class="button" href="/user/{{ user.id }}/edit">Edit</a>
+        <button>Delete</button>
+    </div>
 </main>
+
+{% endblock %}

@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+
 <main>
     <h1>Admins Only</h1>
     <p>The content you are trying to access is only available to admins.</p>
@@ -16,3 +19,5 @@
     <button onclick="history.back()">Go back</button>
     <a class="button" href="/">Return home</a>
 </main>
+
+{% endblock %}

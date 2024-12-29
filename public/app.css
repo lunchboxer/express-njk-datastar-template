@@ -1,6 +1,6 @@
 @font-face {
   font-family: "JetBrains Mono";
-  src: url("/static/dist/JetBrainsMono-Regular.ttf") format("truetype");
+  src: url("/static/fonts/JetBrainsMono-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -8,15 +8,7 @@
 
 @font-face {
   font-family: "JetBrains Mono";
-  src: url("/static/dist/JetBrainsMono-Italic.ttf") format("truetype");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "JetBrains Mono";
-  src: url("/static/dist/JetBrainsMono-ExtraBold.ttf") format("truetype");
+  src: url("/static/fonts/JetBrainsMono-ExtraBold.woff2") format("woff2");
   font-weight: 800;
   font-style: normal;
   font-display: swap;
@@ -588,52 +580,6 @@ input.invalid:focus {
   border-color: var(--error-color);
 }
 
-#notification-list {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 3rem;
-  right: 0;
-  z-index: 1000;
-  max-width: 100%;
-  gap: 0.2rem;
-  padding: 0;
-}
-
-.notification.success {
-  --notification-color: var(--success-color);
-}
-
-.notification.error {
-  --notification-color: var(--error-color);
-}
-
-.notification {
-  --notification-color: var(--primary-color);
-  background-color: var(--contrastier-bg-color);
-  color: var(--notification-color);
-  border-left: 1px solid var(--notification-color);
-  list-style: none;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  width: 20rem;
-  max-width: 100%;
-  padding: 1rem;
-  box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.15);
-  animation: slide-in 0.2s ease-out;
-}
-
-.notification.slide-out {
-  animation: slide-out 0.2s ease-out forwards;
-}
-
-.notification-message {
-  flex-grow: 1;
-  padding: 0;
-  margin: 0;
-}
-
 @keyframes slide-in {
   0% {
     margin-left: 100%;
@@ -711,12 +657,14 @@ nav ul.menu hr {
 
 #mainNav .trigger {
   position: fixed;
-  top: 1rem;
-  left: 1rem;
+  background: var(--background-color);
+  padding: 0.5rem;
+  top: 0.5rem;
+  left: 0.5rem;
 }
 
 nav ul.menu {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: -1rem;
   width: 14rem;
@@ -884,6 +832,10 @@ dd {
 
   #main-title {
     top: 2rem;
+  }
+  #mainNav .trigger {
+    top: 1.5rem;
+    left: 1.5rem;
   }
 
   #navMenuCheckbox {

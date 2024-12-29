@@ -1,26 +1,27 @@
-<main data-signals-redirect="new URLSearchParams(window.location.search).get('redirect')">
+{% extends "base.html" %}
+{% block content %}
 
-        <form action="/auth/login" method="post" data-on-submit="sse('/auth/login', { method: 'POST' })">
+<main>
 
-            <h2>Login</h2>
+    <form action="/auth/login" method="post">
 
-            <div id="login-errors">
-                {% if errors %}<p class="error">{{ errors }}</p>{% endif %}
-            </div>
+        <h2>Login</h2>
 
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" name="username" id="username" data-bind-username required />
-            </div>
+        <div id="login-errors">
+            {% if errors %}<p class="error">{{ errors }}</p>{% endif %}
+        </div>
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" data-bind-password required />
-            </div>
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" required />
 
-            <div class="button-group">
-                <input type="submit" value="Log in" />
-            </div>
-        </form>
-        <p>Don't have an account? <a href="/auth/register">Create one now.</a></p>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required />
+
+        <div class="button-group">
+            <input type="submit" value="Log in" />
+        </div>
+    </form>
+    <p>Don't have an account? <a href="/auth/register">Create one now.</a></p>
 </main>
+
+{% endblock %}

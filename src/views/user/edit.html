@@ -1,22 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
 <main id="content">
     <h2>Edit User</h2>
 
-  {% if errors.all %}
+    {% if errors.all %}
     <p class="error">{{ errors.all }}</p>
-  {% endif %}
-  <form action="/user/{{ user.id }}" method="post">
-            <label for="username">Username</label>
-            <input type="text" name="username" value="{{ user.username }}" required />
-            <label for="name">Name</label>
-            <input type="text" name="name" value="{{ user.name }}" />
-            <label for="email">Email</label>
-            <input type="text" name="email" value="{{ user.email }}" required/>
-            <label for="role">Role</label>
-            <select name="role">
-                <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
-                <option value="user" {% if user.role == 'user' %}selected{% endif %}>User</option>
-            </select>
-    <button type="reset">Reset</button>
+    {% endif %}
+    <form action="/user/{{ user.id }}" method="post">
+        <label for="username">Username</label>
+        <input type="text" name="username" value="{{ user.username }}" required />
+        <label for="name">Name</label>
+        <input type="text" name="name" value="{{ user.name }}" />
+        <label for="email">Email</label>
+        <input type="text" name="email" value="{{ user.email }}" required />
+        <label for="role">Role</label>
+        <select name="role">
+            <option value="admin" {% if user.role=='admin' %}selected{% endif %}>Admin</option>
+            <option value="user" {% if user.role=='user' %}selected{% endif %}>User</option>
+        </select>
+        <button type="reset">Reset</button>
         <input type="submit" value="Save" />
     </form>
 </main>
+
+{% endblock %}

@@ -1,12 +1,24 @@
-<main id="content">
+{% extends "base.html" %}
+{% block content %}
+
+<main>
     <h2>Profile</h2>
     {% if user %}
-    <p>Username: {{ user.username }}</p>
-    <p>Email: {{ user.email }}</p>
-    <p>Name: {{ user.name or '-' }}</p>
-    <p>Role: {{ user.role }}</p>
-    <p>ID: {{ user.id }}</p>
+    <dl>
+        <dt>Username</dt>
+        <dd>{{ user.username }}</dd>
+        <dt>Email</dt>
+        <dd>{{ user.email }}</dd>
+        <dt>Name</dt>
+        <dd>{{ user.name or '-' }}</dd>
+        <dt>Role</dt>
+        <dd>{{ user.role }}</dd>
+        <dt>ID</dt>
+        <dd>{{ user.id }}</dd>
+    </dl>
     {% else %}
     <p>You are not logged in.</p>
     {% endif %}
 </main>
+
+{% endblock %}

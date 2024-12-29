@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+
 <main>
     <h2>Error {{ status }} - {{ error.message }}</h2>
     {% if process.env.NODE_ENV !== 'production' %}
@@ -6,3 +9,5 @@
     {% endif %}
     <p><a href="/">Go back to the home page</a></p>
 </main>
+
+{% endblock %}

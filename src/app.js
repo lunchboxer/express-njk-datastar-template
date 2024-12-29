@@ -6,9 +6,6 @@ import livereload from 'livereload'
 import nunjucks from 'nunjucks'
 import { errorHandler404, errorHandler500 } from './errorHandler.js'
 import { authMiddleware } from './middleware/auth.js'
-import { renderMiddleware } from './middleware/render-page.js'
-import { setHeadersMiddleware } from './middleware/sse-headers.js'
-import { templatePathMiddleware } from './middleware/template-path-from-route.js'
 import { apiRouter } from './routes/api.js'
 import { authRouter } from './routes/auth.js'
 import { rootRouter } from './routes/root.js'
@@ -41,9 +38,6 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cookieParser())
 app.use(authMiddleware)
-app.use(setHeadersMiddleware)
-app.use(templatePathMiddleware)
-app.use(renderMiddleware)
 
 nunjucks.configure(join(__dirname, 'views'), {
   autoescape: true,
@@ -51,7 +45,19 @@ nunjucks.configure(join(__dirname, 'views'), {
   noCache: dev,
 })
 
-app.use('/static', express.static(join(__dirname, '../public')))
+app.use(
+  '/static',
+  express.static(join(__dirname, '../public'), {
+    maxAge: dev ? 0 : '1d',
+  }),
+)
+
+app.use(
+  '/static/fonts',
+  express.static(join(__dirname, '../public/fonts'), {
+    maxAge: '1y',
+  }),
+)
 
 app.set('view engine', 'html')
 

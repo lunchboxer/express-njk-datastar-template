@@ -1,63 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+
 <main>
-    <form id="register-form" method="post" data-on-submit="sse('/auth/register', { method: 'post' })">
+    <form id="register-form" method="post">
         <h2>Register</h2>
 
-        <div class="input-group" id="username-group">
-            <label for="username" class="label {% if errors.username %}invalid{% endif %}">
-                Username
-            </label>
-            <input name="username" id="login-username-input" required value="{{username}}" data-bind-username {% if
-                errors.username %}class="invalid" {% endif %}>
+        <label for="username" class="label {% if errors.username %}invalid{% endif %}">
+            Username
+        </label>
+        <input name="username" id="login-username-input" required value="{{username}}" {% if errors.username
+            %}class="invalid" {% endif %}>
 
-            {% if errors.username %}
-            <p class="error">{{ errors.username }}</p>
-            {% endif %}
+        {% if errors.username %}
+        <p class="error">{{ errors.username }}</p>
+        {% endif %}
+
+        <label for="email" class="label {% if errors.email %}invalid{% endif %}">
+            Email
+        </label>
+        <input name="email" required value="{{username}}" id="login-email-input" {% if errors.email %}class="invalid" {%
+            endif %}>
+
+        {% if errors.email %}
+        <p class="error">{{ errors.email }}</p>
+        {% endif %}
+
+        <label for="password" class="label {% if errors.password %}invalid{% endif %}">
+            Password
+        </label>
+        <input name="password" type="password" id="login-password-input" required value="{{password}}" {% if
+            errors.password %}class="invalid" {% endif %}>
+
+        {% if errors.password %}
+        <p class="error">{{ errors.password }}</p>
+        {% endif %}
+
+        <label for="name" class="label {% if errors.name%}invalid{% endif %}">
+            Name (Optional)
+        </label>
+        <input name="name" id="login-name-input" value="{{name}}" {% if errors.name %}class="invalid" {% endif %}>
+
+        {% if errors.name %}
+        <p class="error">{{ errors.name }}</p>
+        {% endif %}
+
+        {% if error.all %}
+        <p class="error">{{error.all}}</p>
+        {% endif %}
+
+
+        <div class="button-group">
+            <input class="form-submit" type="submit" value="Register" />
         </div>
-
-        <div class="input-group" id="email-group">
-            <label for="email" class="label {% if errors.email %}invalid{% endif %}">
-                Email
-            </label>
-            <input name="email" required value="{{username}}" id="login-email-input" data-bind-email {% if errors.email
-                %}class="invalid" {% endif %}>
-
-            {% if errors.email %}
-            <p class="error">{{ errors.email }}</p>
-            {% endif %}
-        </div>
-
-        <div class="input-group" id="password-group">
-            <label for="password" class="label {% if errors.password %}invalid{% endif %}">
-                Password
-            </label>
-            <input name="password" type="password" id="login-password-input" required value="{{password}}"
-                data-bind-password {% if errors.password %}class="invalid" {% endif %}>
-
-            {% if errors.password %}
-            <p class="error">{{ errors.password }}</p>
-            {% endif %}
-        </div>
-
-        <div class="input-group" id="name-group">
-            <label for="name" class="label {% if errors.name%}invalid{% endif %}">
-                Name (Optional)
-            </label>
-            <input name="name" id="login-name-input" value="{{name}}" data-bind-name {% if errors.name %}class="invalid"
-                {% endif %}>
-
-            {% if errors.name %}
-            <p class="error">{{ errors.name }}</p>
-            {% endif %}
-
-            {% if error.all %}
-            <p class="error">{{error.all}}</p>
-            {% endif %}
-
-
-            <div class="button-group">
-                <button class="form-submit" type="submit">
-                    Register
-                </button>
-            </div>
     </form>
 </main>
+
+{% endblock %}

@@ -7,31 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="view-transition" content="auto">
     <link rel="stylesheet" href="/static/app.css" type="text/css" />
-    <script>
-      // intercept link clicks in the html and use datastar sse + pushstate
-      document.testFunction = function (event, sse) {
-        const target = event.target.closest('a')
-        // we can overwrite this interception of link clicks in the html
-        if (target?.dataset?.onClick__prevent) {
-          return false
-        }
-        if (!target?.href || target.origin !== window.location.origin) {
-          return false
-        }
-        event.preventDefault()
-        if (target.pathname === window.location.pathname) {
-          return false
-        }
-        window.history.pushState(null, '', target.pathname)
-        return true
-      }
-    </script>
-    <script type="module" src="/static/dist/datastar-0-21-4-9749015e8a0414d4.js"></script>
 </head>
 
-<body
-    data-on-click="document.testFunction(evt) && sse(evt.target.pathname || '/')"
-    data-signals-sse="true">
+<body>
     <div class="hide-on-big">
         {% include "partials/logo-and-title.html" %}
     </div>
@@ -39,10 +17,7 @@
     {% block content %}
     {% include includeTemplate %}
     {% endblock %}
-
-    <pre><code data-text="ctx.signals.JSON()"></code></pre>
     {% include "partials/footer.html" %}
-    <ul id="notification-list"></ul>
 </body>
 
 </html>

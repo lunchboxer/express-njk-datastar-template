@@ -1,4 +1,7 @@
-<main id="content">
+{% extends "base.html" %}
+{% block content %}
+
+<main>
     <h2>Users</h2>
 
     {%if users.length == 0 %}
@@ -31,3 +34,5 @@
     {% endif %}
 
 </main>
+
+{% endblock %}
