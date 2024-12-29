@@ -5,26 +5,26 @@
 
     <dl>
         <dt>Username</dt>
-        <dd>{{ user.username }}</dd>
+        <dd>{{ selectedUser.username }}</dd>
         <dt>Name</dt>
-        <dd>{{ user.name or "--" }}</dd>
+        <dd>{{ selectedUser.name }}</dd>
         <dt>Email</dt>
-        <dd>{{ user.email }}</dd>
+        <dd>{{ selectedUser.email }}</dd>
         <dt>Role</dt>
-        <dd>{{ user.role }}</dd>
+        <dd>{{ selectedUser.role }}</dd>
         <dt>ID</dt>
-        <dd>{{ user.id }}</dd>
+        <dd>{{ selectedUser.id }}</dd>
     </dl>
     <div class="button-group start">
-        <a class="button" href="/user/{{ user.id }}/edit">Edit</a>
+        <a class="button" href="/user/{{ selectedUser.id }}/edit">Edit</a>
         <button id="delete-user-button" onclick="deleteModal.showModal()">Delete</button>
     </div>
 
     <dialog id="deleteModal">
         <h3>Confirm Delete</h3>
-        <p>Are you sure you want to delete the user "{{ user.username }}"? This action cannot be undone.</p>
+        <p>Are you sure you want to delete the user "{{ selectedUser.username }}"? This action cannot be undone.</p>
         <form method="dialog">
-            <input value="Yes, Delete" type="submit" formaction="/user/{{ user.id }}/delete" formmethod="post" />
+            <input value="Yes, Delete" type="submit" formaction="/user/{{ selectedUser.id }}/delete" formmethod="post" />
             <button type="submit">Cancel</button>
         </form>
     </dialog>

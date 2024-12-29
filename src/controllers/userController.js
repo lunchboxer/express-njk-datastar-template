@@ -12,7 +12,7 @@ export const showUser = async (req, res, next) => {
     error.status = 404
     return next(error)
   }
-  return res.render('user/detail', { title: 'User', user })
+  return res.render('user/detail', { title: 'User', selectedUser: user })
 }
 
 export const showUserForm = async (req, res, next) => {
@@ -22,15 +22,18 @@ export const showUserForm = async (req, res, next) => {
     error.status = 404
     return next(error)
   }
-  return res.render('user/edit', { title: 'Edit User', user })
+  return res.render('user/edit', { title: 'Edit User', selectedUser: user })
 }
+
+export const showCreateUserForm = (_req, res, _next) =>
+  res.render('user/create', { title: 'Create User' })
 
 export const editUser = async (req, res, _next) => {
   const { errors } = await User.update(req.params.id, req.body)
   if (errors) {
     return res.render('user/edit', {
       title: 'Edit User',
-      user: req.body,
+      selectedUser: req.body,
       errors,
     })
   }
@@ -50,7 +53,7 @@ export const deleteUser = async (req, res, next) => {
     }
     return res.render('user/detail', {
       title: 'User',
-      user,
+      selectedUser: user,
       errors,
     })
   }
@@ -58,7 +61,7 @@ export const deleteUser = async (req, res, next) => {
 }
 
 export const createUser = async (req, res, _next) => {
-  const { errors } = await User.create(req.body)
+  const { data, errors } = await User.create(req.body)
   if (errors) {
     return res.render('user/create', {
       title: 'Create User',
@@ -66,7 +69,7 @@ export const createUser = async (req, res, _next) => {
       errors,
     })
   }
-  return res.redirect(`/user/${req.params.id}`)
+  return res.redirect(`/user/${data.id}`)
 }
 
 // just for testing

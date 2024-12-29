@@ -4,6 +4,7 @@ import {
   createUser,
   deleteUser,
   editUser,
+  showCreateUserForm,
   showUser,
   showUserForm,
 } from '../controllers/userController.js'
@@ -12,10 +13,11 @@ const userRouter = Router()
 
 userRouter
   .get('/', onlyAdmins, allUsers)
+  .get('/create', onlyAdmins, showCreateUserForm)
+  .post('/create', onlyAdmins, createUser)
   .get('/:id', onlyAdmins, showUser)
   .get('/:id/edit', onlyAdmins, showUserForm)
   .post('/:id', onlyAdmins, editUser)
   .post('/:id/delete', onlyAdmins, deleteUser)
-  .post('/create', onlyAdmins, createUser)
 
 export { userRouter }

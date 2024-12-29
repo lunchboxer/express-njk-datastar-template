@@ -25,6 +25,11 @@ const USER_VALIDATION_RULES = {
     email: { required: true },
     name: { required: false },
     role: { required: true },
+    password: {
+      required: true,
+      minLength: 6,
+      maxLength: 40,
+    },
   },
 }
 
@@ -276,6 +281,8 @@ export const User = {
       const id = generateId()
       const role = data.role || 'user'
       const { createUser } = queries
+      console.error('id', id)
+      console.error('data', data)
       await client.execute({
         sql: createUser,
         args: [id, data.username, data.name, data.email, data.password, role],
