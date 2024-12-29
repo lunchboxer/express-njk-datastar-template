@@ -11,8 +11,8 @@ VALUES (?, ?, ?, ?, ?, ?);
 -- name: getUserByUsername
 SELECT id, username, name, email, role FROM user WHERE username = ?;
 
--- name: usernameExists
-SELECT EXISTS (SELECT 1 FROM user WHERE username = ?);
+-- name: getUserByUsernameWithPassword
+SELECT id, username, name, email, role, password FROM user WHERE username = ?;
 
 -- name: getUserById
 SELECT id, username, name, email, role FROM user WHERE id = ?;
@@ -22,3 +22,15 @@ UPDATE user SET username = ?, name = ?, email = ?, role = ? WHERE id = ?;
 
 -- name: removeUserById
 DELETE FROM user WHERE id = ?;
+
+-- name: usernameTaken
+SELECT EXISTS (SELECT 1 FROM user WHERE username = ?);
+
+-- name: usernameTakenExcludingId
+SELECT EXISTS (SELECT 1 FROM user WHERE username = ? AND id != ?);
+
+-- name: emailTaken
+SELECT EXISTS (SELECT 1 FROM user WHERE email = ?);
+
+-- name: emailTakenExcludingId
+SELECT EXISTS (SELECT 1 FROM user WHERE email = ? AND id != ?);

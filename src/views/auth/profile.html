@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-<main>
     <h2>Profile</h2>
     {% if user %}
     <dl>
@@ -19,6 +18,5 @@
     {% else %}
     <p>You are not logged in.</p>
     {% endif %}
-</main>
 
 {% endblock %}

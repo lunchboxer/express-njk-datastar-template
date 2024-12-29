@@ -14,9 +14,11 @@
         {% include "partials/logo-and-title.html" %}
     </div>
     {% include "partials/nav-menu.html" %}
+    <main>
+    {% include "partials/error-alert.html" %}
     {% block content %}
-    {% include includeTemplate %}
     {% endblock %}
+    </main>
     {% include "partials/footer.html" %}
 </body>
 

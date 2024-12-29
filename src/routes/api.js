@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { apiRegister, login, logout } from '../controllers/authController.js'
+import { checkUsernameAvailability } from '../controllers/userController.js'
 
 const apiRouter = Router()
 
@@ -7,6 +8,8 @@ apiRouter
   .post('/login', login)
   .post('/register', apiRegister)
   .post('/logout', logout)
+  // just for testing
+  .post('/check-username-availability', checkUsernameAvailability)
 
   .use((err, _req, res, _next) => {
     console.error(err)

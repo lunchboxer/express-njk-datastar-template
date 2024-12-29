@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-<main>
     <h2>User Details</h2>
 
     <dl>
@@ -16,7 +15,7 @@
         <dt>ID</dt>
         <dd>{{ user.id }}</dd>
     </dl>
-    <div>
+    <div class="button-group start">
         <a class="button" href="/user/{{ user.id }}/edit">Edit</a>
         <button id="delete-user-button" onclick="deleteModal.showModal()">Delete</button>
     </div>
@@ -29,6 +28,5 @@
             <button type="submit">Cancel</button>
         </form>
     </dialog>
-</main>
 
 {% endblock %}

@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-<main>
     <form id="register-form" method="post">
         <h2>Register</h2>
 
@@ -18,7 +17,7 @@
         <label for="email" class="label {% if errors.email %}invalid{% endif %}">
             Email
         </label>
-        <input name="email" required value="{{username}}" id="login-email-input" {% if errors.email %}class="invalid" {%
+        <input name="email" required value="{{email}}" id="login-email-input" {% if errors.email %}class="invalid" {%
             endif %}>
 
         {% if errors.email %}
@@ -53,6 +52,5 @@
             <input class="form-submit" type="submit" value="Register" />
         </div>
     </form>
-</main>
 
 {% endblock %}

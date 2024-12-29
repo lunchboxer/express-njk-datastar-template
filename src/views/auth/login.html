@@ -1,15 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 
-<main>
-
     <form action="/auth/login" method="post">
 
         <h2>Login</h2>
-
-        <div id="login-errors">
-            {% if errors %}<p class="error">{{ errors }}</p>{% endif %}
-        </div>
 
         <label for="username">Username</label>
         <input type="text" name="username" id="username" required />
@@ -22,6 +16,5 @@
         </div>
     </form>
     <p>Don't have an account? <a href="/auth/register">Create one now.</a></p>
-</main>
 
 {% endblock %}

@@ -1,20 +1,5 @@
-import { Auth } from '../models/authModel.js'
-
-export const apiRegister = async (req, res) => {
-  try {
-    if (!req.body) {
-      throw new Error('Missing request body')
-    }
-    const result = await Auth.register(req.body)
-    if (result.errors) {
-      return res.status(400).json({ errors: result.errors })
-    }
-    setAuthCookie(res, result.token)
-    res.status(201).json(result)
-  } catch (error) {
-    res.status(400).json({ error: error.message })
-  }
-}
+import { User } from '../models/userModel.js'
+import { generateJwt, hashPassword, passwordMatches } from '../utils/crypto.js'
 
 const setAuthCookie = (res, token) => {
   res.cookie('auth', token, {
@@ -22,6 +7,54 @@ const setAuthCookie = (res, token) => {
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
   })
+}
+
+export const apiRegister = async (req, res) => {
+  try {
+    if (!req.body) {
+      throw new Error('Missing request body')
+    }
+    const { username, password, email, name } = req.body
+
+    if (!(username && password && email)) {
+      throw new Error('Missing username, email or password')
+    }
+
+    const userExists = await User.isUsernameTaken(username)
+    if (userExists) {
+      return res.status(400).json({
+        errors: {
+          username: 'User already exists',
+        },
+      })
+    }
+
+    const hashedPassword = await hashPassword(password)
+
+    const userData = {
+      username,
+      name,
+      email,
+      password: hashedPassword,
+      role: 'user',
+    }
+    const { data: user, errors } = await User.create(userData)
+
+    if (errors) {
+      return res.status(400).json({ errors: errors })
+    }
+
+    const token = await generateJwt({ id: user.id }, process.env.JWT_SECRET)
+
+    setAuthCookie(res, token)
+    res.status(201).json({
+      success: true,
+      message: 'User registered successfully',
+      token,
+    })
+  } catch (error) {
+    res.status(400).json({ error: error.message })
+  }
 }
 
 export const login = async (req, res, _next) => {
@@ -37,40 +70,62 @@ export const login = async (req, res, _next) => {
       throw new Error('Username and password are required')
     }
 
-    const result = await Auth.login(username, password)
-    if (result.errors) {
-      throw new Error(result.errors)
+    const { data: user, errors } = await User.findByUsername(username, true)
+    if (errors) {
+      throw new Error('Invalid credentials')
     }
 
-    setAuthCookie(res, result.token)
+    const isPasswordValid = await passwordMatches(password, user.password)
+    if (!isPasswordValid) {
+      throw new Error('Invalid credentials')
+    }
+
+    const token = await generateJwt({ id: user.id }, process.env.JWT_SECRET)
+
+    setAuthCookie(res, token)
     return res.redirect(redirectUrl)
   } catch (error) {
     res.render('auth/login', {
       title: 'Log in',
       ...req.body,
-      errors: error.message,
+      errors: { all: error.message },
     })
   }
 }
 
 export const register = async (req, res, _next) => {
   try {
-    const result = await Auth.register(req.body)
-    if (result.errors) {
-      res.render('auth/register', {
+    const { username, password, email, name } = req.body
+
+    const hashedPassword = await hashPassword(password)
+
+    const userData = {
+      username,
+      name,
+      email,
+      password: hashedPassword,
+      role: 'user',
+    }
+    const { data: user, errors } = await User.create(userData)
+
+    if (errors) {
+      return res.render('auth/register', {
         title: 'Register',
         ...req.body,
-        errors: result.errors,
+        errors,
       })
     }
-    setAuthCookie(res, result.token)
+
+    const token = await generateJwt({ id: user.id }, process.env.JWT_SECRET)
+
+    setAuthCookie(res, token)
     const redirectUrl = req.query.redirect || '/'
     return res.redirect(redirectUrl)
   } catch (error) {
     return res.render('auth/register', {
       title: 'Register',
       ...req.body,
-      errors: { all: error },
+      errors: { all: error.message },
     })
   }
 }

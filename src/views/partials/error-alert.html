@@ -1,0 +1,7 @@
+
+    {% if errors.all %}
+    <div class="alert-error" role="alert" aria-live="assertive">
+      {% include "icons/alert-triangle.svg" %}
+        <p>{{ errors.all }}</p>
+    </div>
+    {% endif %}

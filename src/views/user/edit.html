@@ -1,19 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 
-<main id="content">
     <h2>Edit User</h2>
 
-    {% if errors.all %}
-    <p class="error">{{ errors.all }}</p>
-    {% endif %}
     <form action="/user/{{ user.id }}" method="post">
         <label for="username">Username</label>
-        <input type="text" name="username" value="{{ user.username }}" required />
+        <input type="text" name="username" value="{{ user.username }}" required minlength="3" maxlength="20" />
+        {% if errors.username %}
+        <p class="error">{{ errors.username }}</p>
+        {% endif %}
+
         <label for="name">Name</label>
         <input type="text" name="name" value="{{ user.name }}" />
+        {% if errors.name %}
+        <p class="error">{{ errors.name }}</p>
+        {% endif %}
+
         <label for="email">Email</label>
         <input type="text" name="email" value="{{ user.email }}" required />
+        {% if errors.email %}
+        <p class="error">{{ errors.email }}</p>
+        {% endif %}
+
         <label for="role">Role</label>
         <select name="role">
             <option value="admin" {% if user.role=='admin' %}selected{% endif %}>Admin</option>
@@ -22,6 +30,5 @@
         <button type="reset">Reset</button>
         <input type="submit" value="Save" />
     </form>
-</main>
-
+    {{ errors | dump}}
 {% endblock %}

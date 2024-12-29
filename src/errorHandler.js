@@ -4,11 +4,11 @@ export const errorHandler500 = (err, req, res, _next) => {
   const data = {
     user: req.user,
     error: err,
-    status: err.statusCode || 500,
+    status: err.status || 500,
   }
   if (req.accepts('html')) {
     res.render('error', {
-      title: 'Server Error',
+      title: 'Error',
       ...data,
     })
   } else if (req.accepts('application/json')) {
@@ -27,7 +27,7 @@ export const errorHandler404 = (req, res, _next) => {
   res.status(404)
   if (req.accepts('html')) {
     return res.render('404', {
-      title: 'Not Found',
+      title: 'Page Not Found',
       ...data,
     })
   }
