@@ -120,7 +120,6 @@ export const changePassword = async (req, res, _next) => {
     })
   }
 
-  // if they are not admin we check the currentPassword against the db.
   if (req.user.role !== 'admin') {
     const { data: user, errors } = await User.findById(req.params.id, true)
     if (errors) {
@@ -138,7 +137,6 @@ export const changePassword = async (req, res, _next) => {
 
   const hashedPassword = await hashPassword(newPassword)
 
-  console.error('hashedPassword', hashedPassword)
   User.patch(req.params.id, { password: hashedPassword })
 
   if (req.user.id === req.params.id) {

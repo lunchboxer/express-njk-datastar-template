@@ -281,8 +281,6 @@ export const User = {
       const id = generateId()
       const role = data.role || 'user'
       const { createUser } = queries
-      console.error('id', id)
-      console.error('data', data)
       await client.execute({
         sql: createUser,
         args: [id, data.username, data.name, data.email, data.password, role],
@@ -337,8 +335,6 @@ export const User = {
   },
 
   patch: async (id, data) => {
-    console.error('id', id)
-    console.error('data', data)
     const { getUserByIdWithPassword } = queries
     const result = await client.execute({
       sql: getUserByIdWithPassword,
@@ -348,7 +344,6 @@ export const User = {
     if (!existingUser) {
       return { data: null, errors: { all: 'User not found' } }
     }
-    console.error('existingUser', existingUser)
 
     const updateData = {
       username: data.username || existingUser.username,
