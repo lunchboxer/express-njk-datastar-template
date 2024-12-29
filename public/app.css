@@ -92,6 +92,10 @@
   }
 }
 
+@view-transition {
+  navigation: auto;
+}
+
 body:has(.theme-switcher input[value="light"]:checked) {
   --available-color-schemes: light;
 }
