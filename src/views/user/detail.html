@@ -8,7 +8,7 @@
         <dt>Username</dt>
         <dd>{{ user.username }}</dd>
         <dt>Name</dt>
-        <dd>{{ user.name }}</dd>
+        <dd>{{ user.name or "--" }}</dd>
         <dt>Email</dt>
         <dd>{{ user.email }}</dd>
         <dt>Role</dt>
@@ -18,8 +18,17 @@
     </dl>
     <div>
         <a class="button" href="/user/{{ user.id }}/edit">Edit</a>
-        <button>Delete</button>
+        <button id="delete-user-button" onclick="deleteModal.showModal()">Delete</button>
     </div>
+
+    <dialog id="deleteModal">
+        <h3>Confirm Delete</h3>
+        <p>Are you sure you want to delete the user "{{ user.username }}"? This action cannot be undone.</p>
+        <form method="dialog">
+            <input value="Yes, Delete" type="submit" formaction="/user/{{ user.id }}/delete" formmethod="post" />
+            <button type="submit">Cancel</button>
+        </form>
+    </dialog>
 </main>
 
 {% endblock %}

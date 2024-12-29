@@ -1,11 +1,11 @@
-import { handleLogin, handleRegister } from '../models/authModel.js'
+import { Auth } from '../models/authModel.js'
 
 export const apiRegister = async (req, res) => {
   try {
     if (!req.body) {
       throw new Error('Missing request body')
     }
-    const result = await handleRegister(req.body)
+    const result = await Auth.register(req.body)
     if (result.errors) {
       return res.status(400).json({ errors: result.errors })
     }
@@ -37,7 +37,7 @@ export const login = async (req, res, _next) => {
       throw new Error('Username and password are required')
     }
 
-    const result = await handleLogin(username, password)
+    const result = await Auth.login(username, password)
     if (result.errors) {
       throw new Error(result.errors)
     }
@@ -55,7 +55,7 @@ export const login = async (req, res, _next) => {
 
 export const register = async (req, res, _next) => {
   try {
-    const result = await handleRegister(req.body)
+    const result = await Auth.register(req.body)
     if (result.errors) {
       res.render('auth/register', {
         title: 'Register',

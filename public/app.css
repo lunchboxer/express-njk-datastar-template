@@ -199,7 +199,7 @@ pre {
   font-size: 1rem;
 }
 
-pre > code {
+pre>code {
   border-radius: 0;
   white-space: pre;
   display: block;
@@ -347,8 +347,7 @@ textarea {
 
 select {
   /* background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 0 29 14" width="29"><path fill="%23d1d1d1" d="M9.37727 3.625l5.08154 6.93523L19.54036 3.625"/></svg>') center right no-repeat; */
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 8" width="30"><path fill="%23b1b1b1" d="M0,0l6,8l6-8"/></svg>')
-    center right no-repeat;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 8" width="30"><path fill="%23b1b1b1" d="M0,0l6,8l6-8"/></svg>') center right no-repeat;
   background-color: var(--contrast-bg-color);
   padding-right: 3rem;
   cursor: pointer;
@@ -526,6 +525,34 @@ th:last-child {
   padding-right: 0;
 }
 
+dialog {
+  padding: 1rem 2rem;
+  background-color: var(--contrast-bg-color);
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.15);
+}
+
+dialog::backdrop {
+  background-color: rgba(100, 100, 100, 0.1);
+  backdrop-filter: blur(1px);
+}
+
+dialog[open] {
+  animation: slide-up 0.2s ease-out;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 p.success,
 p.error {
   color: var(--error-color);
@@ -541,6 +568,7 @@ p.success {
 }
 
 @keyframes subtle-error-pulse {
+
   0%,
   100% {
     opacity: 1;
@@ -756,7 +784,7 @@ a.title-link {
   text-wrap: nowrap;
 }
 
-#navMenuToggle input:checked ~ ul {
+#navMenuToggle input:checked~ul {
   transform: none;
 }
 
@@ -764,7 +792,7 @@ a.title-link {
   display: none;
 }
 
-#navMenuToggle input:checked + .trigger {
+#navMenuToggle input:checked+.trigger {
   visibility: hidden;
 }
 
@@ -837,6 +865,7 @@ dd {
   #main-title {
     top: 2rem;
   }
+
   #mainNav .trigger {
     top: 1.5rem;
     left: 1.5rem;

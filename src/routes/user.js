@@ -4,6 +4,7 @@ import {
   editUser,
   showUser,
   showUserForm,
+  deleteUser,
 } from '../controllers/userController.js'
 import { onlyAdmins } from '../middleware/auth.js'
 const userRouter = Router()
@@ -12,5 +13,6 @@ userRouter.get('/', onlyAdmins, allUsers)
 userRouter.get('/:id', onlyAdmins, showUser)
 userRouter.get('/:id/edit', onlyAdmins, showUserForm)
 userRouter.post('/:id', onlyAdmins, editUser)
+userRouter.post('/:id/delete', onlyAdmins, deleteUser)
 
 export { userRouter }
