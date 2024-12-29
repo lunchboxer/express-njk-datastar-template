@@ -8,18 +8,22 @@ import {
   showUser,
   showUserForm,
 } from '../controllers/userController.js'
-import { changePassword } from '../controllers/authController.js'
-import { onlyAdmins, onlyAuthenticated } from '../middleware/auth.js'
+import {
+  changePassword,
+  showChangePasswordForm,
+} from '../controllers/authController.js'
+import { onlyAdmins, onlyAdminsOrSelf } from '../middleware/auth.js'
 const userRouter = Router()
 
 userRouter
   .get('/', onlyAdmins, allUsers)
   .get('/create', onlyAdmins, showCreateUserForm)
+  .get('/:id/change-password', onlyAdminsOrSelf, showChangePasswordForm)
   .post('/create', onlyAdmins, createUser)
   .get('/:id', onlyAdmins, showUser)
   .get('/:id/edit', onlyAdmins, showUserForm)
   .post('/:id', onlyAdmins, editUser)
   .post('/:id/delete', onlyAdmins, deleteUser)
-  .post('/:id/change-password', onlyAuthenticated, changePassword)
+  .post('/:id/change-password', onlyAdminsOrSelf, changePassword)
 
 export { userRouter }

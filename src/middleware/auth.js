@@ -59,3 +59,13 @@ export const onlyAdmins = (req, res, next) => {
     })
   }
 }
+
+export const onlyAdminsOrSelf = (req, _res, next) => {
+  if (req.user?.role === 'admin' || req.user?.id === req.params.id) {
+    next()
+  } else {
+    const error = new Error('Unauthorized')
+    error.status = 403
+    return next(error)
+  }
+}

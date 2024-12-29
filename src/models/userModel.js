@@ -110,7 +110,7 @@ export const User = {
    * @returns {Promise<{data: Object|null, errors: Object|null}>}
    * An object containing either the user or an error
    */
-  findById: async id => {
+  findById: async (id, showPassword = false) => {
     if (!id) {
       return {
         data: null,
@@ -119,9 +119,9 @@ export const User = {
         },
       }
     }
-    const { getUserById } = queries
+    const { getUserById, getUserByIdWithPassword } = queries
     const result = await client.execute({
-      sql: getUserById,
+      sql: showPassword ? getUserByIdWithPassword : getUserById,
       args: [id],
     })
     const user = result?.rows[0]
@@ -337,6 +337,8 @@ export const User = {
   },
 
   patch: async (id, data) => {
+    console.error('id', id)
+    console.error('data', data)
     const { getUserByIdWithPassword } = queries
     const result = await client.execute({
       sql: getUserByIdWithPassword,
@@ -346,6 +348,7 @@ export const User = {
     if (!existingUser) {
       return { data: null, errors: { all: 'User not found' } }
     }
+    console.error('existingUser', existingUser)
 
     const updateData = {
       username: data.username || existingUser.username,

@@ -93,9 +93,58 @@ export const login = async (req, res, _next) => {
   }
 }
 
+const loadChangePasswordWithErrors = async (req, res, errors) => {
+  const { data: user, errors: userErrors } = await User.findById(req.params.id)
+  if (userErrors) {
+    const error = new Error('User not found')
+    error.status = 404
+    throw error
+  }
+  return res.render('user/change-password', {
+    title: 'Change Password',
+    selectedUser: user,
+    errors,
+  })
+}
+
+export const showChangePasswordForm = (req, res, _next) => {
+  return loadChangePasswordWithErrors(req, res, null)
+}
+
 export const changePassword = async (req, res, _next) => {
-  console.error('req.body', req.body)
-  res.render('auth/profile', { title: 'User Profile', user: req.user })
+  const { currentPassword, newPassword, confirmPassword } = req.body
+
+  if (newPassword !== confirmPassword) {
+    return loadChangePasswordWithErrors(req, res, {
+      confirmPassword: 'Passwords do not match',
+    })
+  }
+
+  // if they are not admin we check the currentPassword against the db.
+  if (req.user.role !== 'admin') {
+    const { data: user, errors } = await User.findById(req.params.id, true)
+    if (errors) {
+      const error = new Error('User not found')
+      error.status = 404
+      throw error
+    }
+
+    if (!passwordMatches(currentPassword, user.password)) {
+      return loadChangePasswordWithErrors(req, res, {
+        currentPassword: 'Invalid password',
+      })
+    }
+  }
+
+  const hashedPassword = await hashPassword(newPassword)
+
+  console.error('hashedPassword', hashedPassword)
+  User.patch(req.params.id, { password: hashedPassword })
+
+  if (req.user.id === req.params.id) {
+    return res.redirect('/auth/logout')
+  }
+  return res.redirect(`/user/${req.params.id}`)
 }
 
 export const register = async (req, res, _next) => {

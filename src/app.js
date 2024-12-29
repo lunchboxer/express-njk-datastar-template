@@ -6,6 +6,7 @@ import livereload from 'livereload'
 import nunjucks from 'nunjucks'
 import { errorHandler404, errorHandler500 } from './errorHandler.js'
 import { authMiddleware } from './middleware/auth.js'
+import { referrerMiddleware } from './middleware/referrer.js'
 import { apiRouter } from './routes/api.js'
 import { authRouter } from './routes/auth.js'
 import { rootRouter } from './routes/root.js'
@@ -38,6 +39,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cookieParser())
 app.use(authMiddleware)
+app.use(referrerMiddleware)
 
 nunjucks.configure(join(__dirname, 'views'), {
   autoescape: true,

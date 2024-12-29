@@ -1,38 +1,37 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <h2>Edit User</h2>
+<h2>Edit User</h2>
 
-    <form action="/user/{{ selectedUser.id }}" method="post">
-        <label for="username">Username</label>
-        <input type="text" name="username" value="{{ selectedUser.username }}" required minlength="3" maxlength="20" />
-        {% if errors.username %}
-        <p class="error">{{ errors.username }}</p>
-        {% endif %}
+<form action="/user/{{ selectedUser.id }}" method="post">
+    <label for="username">Username</label>
+    <input type="text" name="username" value="{{ selectedUser.username }}" required minlength="3" maxlength="20" />
+    {% if errors.username %}
+    <p class="error">{{ errors.username }}</p>
+    {% endif %}
 
-        <label for="name">Name</label>
-        <input type="text" name="name" value="{{ selectedUser.name }}" />
-        {% if errors.name %}
-        <p class="error">{{ errors.name }}</p>
-        {% endif %}
+    <label for="name">Name</label>
+    <input type="text" name="name" value="{{ selectedUser.name }}" />
+    {% if errors.name %}
+    <p class="error">{{ errors.name }}</p>
+    {% endif %}
 
-        <label for="email">Email</label>
-        <input type="text" name="email" value="{{ selectedUser.email }}" required />
-        {% if errors.email %}
-        <p class="error">{{ errors.email }}</p>
-        {% endif %}
+    <label for="email">Email</label>
+    <input type="text" name="email" value="{{ selectedUser.email }}" required />
+    {% if errors.email %}
+    <p class="error">{{ errors.email }}</p>
+    {% endif %}
 
-        <label for="role">Role</label>
-        <select name="role">
-            <option value="admin" {% if selectedUser.role=='admin' %}selected{% endif %}>Admin</option>
-            <option value="user" {% if selectedUser.role=='user' %}selected{% endif %}>User</option>
-        </select>
+    <label for="role">Role</label>
+    <select name="role">
+        <option value="admin" {% if selectedUser.role=='admin' %}selected{% endif %}>Admin</option>
+        <option value="user" {% if selectedUser.role=='user' %}selected{% endif %}>User</option>
+    </select>
 
-      <div class="button-group">
+    <div class="button-group">
         <button type="reset">Reset</button>
         <input type="submit" value="Save" />
-      </div>
-    </form>
+    </div>
+</form>
 
-    {% include "partials/password-reset-form.html" %}
 {% endblock %}
