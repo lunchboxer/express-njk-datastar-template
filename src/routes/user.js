@@ -1,4 +1,8 @@
 import { Router } from 'express'
+import {
+  changePassword,
+  showChangePasswordForm,
+} from '../controllers/authController.js'
 import { allUsers } from '../controllers/userController.js'
 import {
   createUser,
@@ -8,10 +12,6 @@ import {
   showUser,
   showUserForm,
 } from '../controllers/userController.js'
-import {
-  changePassword,
-  showChangePasswordForm,
-} from '../controllers/authController.js'
 import { onlyAdmins, onlyAdminsOrSelf } from '../middleware/auth.js'
 const userRouter = Router()
 

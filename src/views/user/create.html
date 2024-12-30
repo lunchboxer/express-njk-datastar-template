@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+
+{% block title %}
+Create User
+{% endblock %}
+
 {% block content %}
 
 <h2>Create User</h2>
@@ -35,8 +40,8 @@
     </select>
 
     <div class="button-group">
-      <a href="/user" class="button">Cancel</a>
-      <input type="submit" value="Save" />
+        <a href="/user" class="button">Cancel</a>
+        <input type="submit" value="Save" />
     </div>
 </form>
 {% endblock %}

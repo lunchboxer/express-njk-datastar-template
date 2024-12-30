@@ -4,15 +4,9 @@ import { onlyAuthenticated } from '../middleware/auth.js'
 const authRouter = Router()
 
 authRouter
-  .get('/login', (_req, res) => res.render('auth/login', { title: 'Log in' }))
-
-  .get('/register', (_req, res) =>
-    res.render('auth/register', { title: 'Register' }),
-  )
-
-  .get('/profile', onlyAuthenticated, (_req, res) =>
-    res.render('auth/profile', { title: 'User Profile' }),
-  )
+  .get('/login', (_req, res) => res.render('auth/login'))
+  .get('/register', (_req, res) => res.render('auth/register'))
+  .get('/profile', onlyAuthenticated, (_req, res) => res.render('auth/profile'))
 
   .post('/register', register)
   .post('/login', login)

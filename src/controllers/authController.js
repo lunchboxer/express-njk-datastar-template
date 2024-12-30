@@ -86,7 +86,6 @@ export const login = async (req, res, _next) => {
     return res.redirect(redirectUrl)
   } catch (error) {
     res.render('auth/login', {
-      title: 'Log in',
       ...req.body,
       errors: { all: error.message },
     })
@@ -101,7 +100,6 @@ const loadChangePasswordWithErrors = async (req, res, errors) => {
     throw error
   }
   return res.render('user/change-password', {
-    title: 'Change Password',
     selectedUser: user,
     errors,
   })
@@ -162,7 +160,6 @@ export const register = async (req, res, _next) => {
 
     if (errors) {
       return res.render('auth/register', {
-        title: 'Register',
         ...req.body,
         errors,
       })
@@ -175,7 +172,6 @@ export const register = async (req, res, _next) => {
     return res.redirect(redirectUrl)
   } catch (error) {
     return res.render('auth/register', {
-      title: 'Register',
       ...req.body,
       errors: { all: error.message },
     })

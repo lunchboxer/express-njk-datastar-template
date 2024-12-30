@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <title>{% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="view-transition" content="auto">
     <link rel="stylesheet" href="/static/app.css" type="text/css" />
@@ -15,9 +15,9 @@
     </div>
     {% include "partials/nav-menu.html" %}
     <main>
-    {% include "partials/error-alert.html" %}
-    {% block content %}
-    {% endblock %}
+        {% include "partials/error-alert.html" %}
+        {% block content %}
+        {% endblock %}
     </main>
     {% include "partials/footer.html" %}
 </body>
