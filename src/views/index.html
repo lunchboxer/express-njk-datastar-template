@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
+{% block headextra %}
+  {% if not user %}
+    <link rel="prefetch" href="/auth/login">
+    <link rel="prefetch" href="/auth/register">
+  {% endif %}
+{% endblock %}
+
 {% block title %}
 Nedstack
 {% endblock %}

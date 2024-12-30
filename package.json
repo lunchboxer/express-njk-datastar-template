@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=production node --env-file=.env src/app.js",
-    "dev": "node --env-file=.env --watch-path=src/ src/app.js",
+    "test": "NODE_ENV=test node --test --env-file=.env.test test/**/*.test.js",
+    "start": "NODE_ENV=production node --env-file=.env ./server.js",
+    "dev": "node --env-file=.env --watch-path=src/ ./server.js",
     "seed": "node --env-file=.env database/seed.js",
     "lint": "biome check",
     "format": "biome check --fix",
@@ -40,6 +40,7 @@
     "cssnano": "^7.0.6",
     "livereload": "^0.9.3",
     "onchange": "^7.1.0",
-    "postcss-cli": "^11.0.0"
+    "postcss-cli": "^11.0.0",
+    "supertest": "^7.0.0"
   }
 }

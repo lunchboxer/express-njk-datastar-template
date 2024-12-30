@@ -17,10 +17,11 @@ import { userRouter } from './routes/user.js'
 const __dirname = import.meta.dirname
 
 const dev = process.env.NODE_ENV !== 'production'
+const test = process.env.NODE_ENV === 'test'
 
 const appCssPath = join(__dirname, '../public/app.css')
 
-if (dev) {
+if (dev && !test) {
   const liveReloadServer = livereload.createServer()
   liveReloadServer.watch([__dirname, appCssPath])
   liveReloadServer.server.once('connection', () => {
@@ -30,9 +31,9 @@ if (dev) {
   })
 }
 
-const app = express()
+export const app = express()
 
-if (dev) {
+if (dev && !test) {
   app.use(connectLivereload({ port: 35729 }))
 }
 
@@ -80,9 +81,3 @@ app.use('/', rootRouter)
 
 app.use(errorHandler500)
 app.use(errorHandler404)
-
-const PORT = 3000
-
-app.listen(PORT, () => {
-  console.info(`Server running on http://localhost:${PORT}`)
-})

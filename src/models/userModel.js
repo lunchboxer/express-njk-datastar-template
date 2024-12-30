@@ -1,7 +1,7 @@
+import { hashPassword } from '../utils/crypto.js'
 import { validate } from '../utils/validation.js'
 import { client, generateId } from './db.js'
 import { queries } from './queryLoader.js'
-import { hashPassword } from '../utils/crypto.js'
 
 const USER_VALIDATION_RULES = {
   // Base rules that apply to both create and update
@@ -168,13 +168,10 @@ export const User = {
    * An object containing either the updated user or an error
    */
   update: async (id, data) => {
-    // Find existing user
-    const existingUserResponse = await User.findById(id)
-    if (!existingUserResponse.data) {
+    const { data: existingUser } = await User.findById(id)
+    if (!existingUser) {
       return { data: null, errors: { all: 'User not found' } }
     }
-
-    const existingUser = existingUserResponse.data
 
     const validationResult = User._validate(data)
     if (!validationResult.isValid) {
