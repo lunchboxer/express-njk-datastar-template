@@ -1,4 +1,5 @@
 import { User } from '../models/userModel.js'
+import { getUserOrThrow, renderFormWithErrors } from './userController.js'
 import { generateJwt, hashPassword, passwordMatches } from '../utils/crypto.js'
 
 const setAuthCookie = (res, token) => {
@@ -92,42 +93,23 @@ export const login = async (req, res, _next) => {
   }
 }
 
-const loadChangePasswordWithErrors = async (req, res, errors) => {
-  const { data: user, errors: userErrors } = await User.findById(req.params.id)
-  if (userErrors) {
-    const error = new Error('User not found')
-    error.status = 404
-    throw error
-  }
-  return res.render('user/change-password', {
-    selectedUser: user,
-    errors,
-  })
-}
-
-export const showChangePasswordForm = (req, res, _next) => {
-  return loadChangePasswordWithErrors(req, res, null)
-}
+export const showChangePasswordForm = (req, res, _next) =>
+  renderFormWithErrors(req, res, 'user/change-password')
 
 export const changePassword = async (req, res, _next) => {
   const { currentPassword, newPassword, confirmPassword } = req.body
 
   if (newPassword !== confirmPassword) {
-    return loadChangePasswordWithErrors(req, res, {
+    return renderFormWithErrors(req, res, 'user/change-password', {
       confirmPassword: 'Passwords do not match',
     })
   }
 
   if (req.user.role !== 'admin') {
-    const { data: user, errors } = await User.findById(req.params.id, true)
-    if (errors) {
-      const error = new Error('User not found')
-      error.status = 404
-      throw error
-    }
+    const user = await getUserOrThrow(req, res, null)
 
     if (!passwordMatches(currentPassword, user.password)) {
-      return loadChangePasswordWithErrors(req, res, {
+      return renderFormWithErrors(req, res, 'user/change-password', {
         currentPassword: 'Invalid password',
       })
     }
