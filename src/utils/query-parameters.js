@@ -1,4 +1,4 @@
-import { parse, format } from 'node:url'
+import { format, parse } from 'node:url'
 
 /**
  * Add a query parameter to the given URL.

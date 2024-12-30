@@ -1,6 +1,6 @@
 import { User } from '../models/userModel.js'
-import { getUserOrThrow, renderFormWithErrors } from './userController.js'
 import { generateJwt, hashPassword, passwordMatches } from '../utils/crypto.js'
+import { getUserOrThrow, renderFormWithErrors } from './userController.js'
 
 const setAuthCookie = (res, token) => {
   res.cookie('auth', token, {
@@ -86,7 +86,7 @@ export const login = async (req, res, _next) => {
     setAuthCookie(res, token)
     req.session.alert = {
       type: 'success',
-      message: `You're now logged in as ${user.username} in!`,
+      message: `You're now logged in as ${user.username}!`,
     }
     return res.redirect(redirectUrl)
   } catch (error) {
