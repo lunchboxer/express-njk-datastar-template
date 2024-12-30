@@ -3,9 +3,9 @@
 
 - nunjucks
 - express
-- datastar
+- That's it, okay?
 
-This is a template for an [Express](http://expressjs.com/) app using [nunjucks](https://mozilla.github.io/nunjucks/) as the templating engine. For reactivity and interactivity with the server, the front-end uses [datastar](https://data-star.dev/). This is a similar approach to using HTMX and Alpine.js, but simpler.
+This is a template for an [Express](http://expressjs.com/) app using [nunjucks](https://mozilla.github.io/nunjucks/) as the templating engine. There is no frontend javascript. Add it as you need it. As is, it does plenty without any need for it.
 
 It requires Node.js v18 or later.
 
@@ -22,6 +22,13 @@ It requires Node.js v18 or later.
 Tooling for datastar is not great. The javascript is in a string so the normal javascript lsp ignores it. I've heard there is a vscode extension now?
 
 ## Getting started
+
+Since it's a template, you'll need to make a copy of it. I recommend using [degit](https://github.com/Rich-Harris/degit) to do this.
+
+```bash
+npx degit lunchboxer/nedstack-template my-project
+cd my-project
+```
 
 You'll need to have [atlas](https://atlasgo.io) installed for the database migrations. `curl -sSf https://atlasgo.sh | sh` should do the trick. With atlas installed run `./database/migrate-local.sh` to create the local sqlite database and set it up according to `./database/schema.sql`.
 

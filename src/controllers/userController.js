@@ -41,7 +41,7 @@ export const editUser = async (req, res, _next) => {
   }
   req.session.alert = {
     type: 'success',
-    message: `User "${req.body.username} updated successfully.".`,
+    message: `User "${req.body.username}" updated successfully.`,
   }
   return res.redirect(`/user/${req.params.id}`)
 }
@@ -53,7 +53,7 @@ export const deleteUser = async (req, res, _next) => {
   }
   req.session.alert = {
     type: 'success',
-    message: `User deleted successfully.".`,
+    message: 'User deleted successfully.',
   }
   return res.redirect('/user')
 }
@@ -68,7 +68,7 @@ export const createUser = async (req, res, _next) => {
   }
   req.session.alert = {
     type: 'success',
-    message: `User "${req.body.username}" created successfully.".`,
+    message: `User "${req.body.username}" created successfully.`,
   }
   return res.redirect(`/user/${data.id}`)
 }

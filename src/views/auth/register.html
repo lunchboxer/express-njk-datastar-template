@@ -32,8 +32,8 @@ Register
     <label for="password" class="label {% if errors.password %}invalid{% endif %}">
         Password
     </label>
-    <input name="password" type="password" id="login-password-input" required value="{{password}}" {% if errors.password
-        %}class="invalid" {% endif %}>
+    <input name="password" type="password" id="login-password-input" required minlength="6" maxlength="40"
+        value="{{password}}" {% if errors.password %}class="invalid" {% endif %}>
 
     {% if errors.password %}
     <p class="error">{{ errors.password }}</p>
@@ -58,4 +58,5 @@ Register
     </div>
 </form>
 
+{{ errors | dump }}
 {% endblock %}

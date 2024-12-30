@@ -1,6 +1,7 @@
 import { validate } from '../utils/validation.js'
 import { client, generateId } from './db.js'
 import { queries } from './queryLoader.js'
+import { hashPassword } from '../utils/crypto.js'
 
 const USER_VALIDATION_RULES = {
   // Base rules that apply to both create and update
@@ -18,6 +19,10 @@ const USER_VALIDATION_RULES = {
     role: {
       oneOf: ['admin', 'user'],
     },
+    password: {
+      minLength: 6,
+      maxLength: 40,
+    },
   },
 
   create: {
@@ -25,11 +30,7 @@ const USER_VALIDATION_RULES = {
     email: { required: true },
     name: { required: false },
     role: { required: true },
-    password: {
-      required: true,
-      minLength: 6,
-      maxLength: 40,
-    },
+    password: { required: true },
   },
 }
 
@@ -263,6 +264,7 @@ export const User = {
    * An object containing either the created user's ID or validation/creation errors
    */
   create: async data => {
+    data.role = data.role || 'user'
     const validationResult = User._validate(data, USER_VALIDATION_RULES.create)
 
     if (!validationResult.isValid) {
@@ -279,11 +281,11 @@ export const User = {
 
     try {
       const id = generateId()
-      const role = data.role || 'user'
+      const password = await hashPassword(data.password)
       const { createUser } = queries
       await client.execute({
         sql: createUser,
-        args: [id, data.username, data.name, data.email, data.password, role],
+        args: [id, data.username, data.name, data.email, password, data.role],
       })
 
       return {

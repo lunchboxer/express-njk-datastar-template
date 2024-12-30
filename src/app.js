@@ -44,7 +44,6 @@ app.use(
   }),
 )
 
-// Add middleware for parsing JSON, cookies, and setting user context
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cookieParser())

@@ -139,18 +139,7 @@ export const changePassword = async (req, res, _next) => {
 
 export const register = async (req, res, _next) => {
   try {
-    const { username, password, email, name } = req.body
-
-    const hashedPassword = await hashPassword(password)
-
-    const userData = {
-      username,
-      name,
-      email,
-      password: hashedPassword,
-      role: 'user',
-    }
-    const { data: user, errors } = await User.create(userData)
+    const { data: user, errors } = await User.create(req.body)
 
     if (errors) {
       return res.render('auth/register', {
@@ -162,6 +151,10 @@ export const register = async (req, res, _next) => {
     const token = await generateJwt({ id: user.id }, process.env.JWT_SECRET)
 
     setAuthCookie(res, token)
+    req.session.alert = {
+      type: 'success',
+      message: "You've registered and logged in successfully.",
+    }
     const redirectUrl = req.query.redirect || '/'
     return res.redirect(redirectUrl)
   } catch (error) {
