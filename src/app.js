@@ -1,11 +1,13 @@
 import { join } from 'node:path'
 import connectLivereload from 'connect-livereload'
+import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import express from 'express'
 import livereload from 'livereload'
 import nunjucks from 'nunjucks'
 import { errorHandler404, errorHandler500 } from './errorHandler.js'
 import { authMiddleware } from './middleware/auth.js'
+import { alertsMiddleware } from './middleware/alerts.js'
 import { referrerMiddleware } from './middleware/referrer.js'
 import { apiRouter } from './routes/api.js'
 import { authRouter } from './routes/auth.js'
@@ -34,12 +36,21 @@ if (dev) {
   app.use(connectLivereload({ port: 35729 }))
 }
 
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  }),
+)
+
 // Add middleware for parsing JSON, cookies, and setting user context
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cookieParser())
 app.use(authMiddleware)
 app.use(referrerMiddleware)
+app.use(alertsMiddleware)
 
 nunjucks.configure(join(__dirname, 'views'), {
   autoescape: true,

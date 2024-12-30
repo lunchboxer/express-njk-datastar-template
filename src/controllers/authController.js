@@ -84,6 +84,10 @@ export const login = async (req, res, _next) => {
     const token = await generateJwt({ id: user.id }, process.env.JWT_SECRET)
 
     setAuthCookie(res, token)
+    req.session.alert = {
+      type: 'success',
+      message: `You're now logged in as ${user.username} in!`,
+    }
     return res.redirect(redirectUrl)
   } catch (error) {
     res.render('auth/login', {
@@ -105,9 +109,8 @@ export const changePassword = async (req, res, _next) => {
     })
   }
 
+  const user = await getUserOrThrow(req, res, null)
   if (req.user.role !== 'admin') {
-    const user = await getUserOrThrow(req, res, null)
-
     if (!passwordMatches(currentPassword, user.password)) {
       return renderFormWithErrors(req, res, 'user/change-password', {
         currentPassword: 'Invalid password',
@@ -120,7 +123,16 @@ export const changePassword = async (req, res, _next) => {
   User.patch(req.params.id, { password: hashedPassword })
 
   if (req.user.id === req.params.id) {
+    req.session.alert = {
+      type: 'success',
+      message:
+        'You have been logged out. Please log in with your new password.',
+    }
     return res.redirect('/auth/logout')
+  }
+  req.session.alert = {
+    type: 'success',
+    message: `You've successfully changed "${user.username}"'s password.`,
   }
   return res.redirect(`/user/${req.params.id}`)
 }
@@ -163,6 +175,10 @@ export const register = async (req, res, _next) => {
 export const logout = (req, res) => {
   res.clearCookie('auth')
   if (req.accepts('html')) {
+    req.session.alert = {
+      type: 'success',
+      message: `You're now logged out.`,
+    }
     return res.redirect('/')
   }
   if (req.accepts('json')) {

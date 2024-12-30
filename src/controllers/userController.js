@@ -17,7 +17,10 @@ export const renderFormWithErrors = async (req, res, view, formErrors) => {
 
 export const allUsers = async (_req, res, _next) => {
   const { data: users, errors } = await User.getAll()
-  return res.render('user/index', { users, errors })
+  return res.render('user/index', {
+    users,
+    errors,
+  })
 }
 
 export const showUser = async (req, res, _next) => {
@@ -36,6 +39,10 @@ export const editUser = async (req, res, _next) => {
   if (errors) {
     return renderFormWithErrors(req, res, 'user/edit', errors)
   }
+  req.session.alert = {
+    type: 'success',
+    message: `User "${req.body.username} updated successfully.".`,
+  }
   return res.redirect(`/user/${req.params.id}`)
 }
 
@@ -43,6 +50,10 @@ export const deleteUser = async (req, res, _next) => {
   const { errors } = await User.remove(req.params.id)
   if (errors) {
     return renderFormWithErrors(req, res, 'user/detail', errors)
+  }
+  req.session.alert = {
+    type: 'success',
+    message: `User deleted successfully.".`,
   }
   return res.redirect('/user')
 }
@@ -54,6 +65,10 @@ export const createUser = async (req, res, _next) => {
       user: req.body,
       errors,
     })
+  }
+  req.session.alert = {
+    type: 'success',
+    message: `User "${req.body.username}" created successfully.".`,
   }
   return res.redirect(`/user/${data.id}`)
 }
