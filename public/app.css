@@ -239,7 +239,7 @@ input[type="submit"] {
   text-decoration: none;
   margin: 1rem 0;
   font-size: 1rem;
-  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.15);
 }
 
 input[type="submit"] {
