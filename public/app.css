@@ -667,7 +667,7 @@ nav ul.menu hr {
 }
 
 .menuToggle a:hover {
-  background-color: var(--contrast-bg-color);
+  background-color: var(--background-color);
 }
 
 .menuToggle input {
@@ -743,14 +743,10 @@ a.title-link {
   gap: 0.5rem;
   padding: 0;
   align-items: center;
-
-  :hover {
-    color: var(--color);
-  }
 }
 
 #main-title {
-  color: var(--color);
+  color: var(--primary-color);
   position: absolute;
   top: 1rem;
   right: 50%;
@@ -762,18 +758,18 @@ a.title-link {
   right: unset;
   top: unset;
   transform: unset;
+  padding: 0.5rem;
 }
 
 #main-title .logo {
   margin: 0;
   padding: 0;
-  color: var(--color);
   width: 1.5rem;
   height: 1.5rem;
 }
 
 #main-title:hover {
-  background: none;
+  background: var(--contrast-bg-color);
 }
 
 #main-title h1 {
