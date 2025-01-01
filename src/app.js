@@ -9,6 +9,7 @@ import { errorHandler404, errorHandler500 } from './errorHandler.js'
 import { alertsMiddleware } from './middleware/alerts.js'
 import { authMiddleware } from './middleware/auth.js'
 import { referrerMiddleware } from './middleware/referrer.js'
+import { secureHeaders } from './middleware/secure-headers.js'
 import { apiRouter } from './routes/api.js'
 import { authRouter } from './routes/auth.js'
 import { rootRouter } from './routes/root.js'
@@ -33,6 +34,8 @@ if (dev && !test) {
 
 export const app = express()
 
+app.disable('x-powered-by')
+
 if (dev && !test) {
   app.use(connectLivereload({ port: 35729 }))
 }
@@ -51,6 +54,7 @@ app.use(cookieParser())
 app.use(authMiddleware)
 app.use(referrerMiddleware)
 app.use(alertsMiddleware)
+app.use(secureHeaders)
 
 nunjucks.configure(join(__dirname, 'views'), {
   autoescape: true,
